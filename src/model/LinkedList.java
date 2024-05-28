@@ -68,6 +68,16 @@ public class LinkedList<T> implements Iterable<T> {
 
     }
 
+    public boolean contains(T element) {
+        for (T node : this) {
+            if (node == element) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Delete a Node from the list by his index, it can throw an
      * IndexOutOfBoundsException
