@@ -6,9 +6,9 @@ import java.io.IOException;
 
 /**
  *
- * @author jesus
+ * @author Jesús Duarte
  */
-public class Reader {
+public class LettersFileReader {
     
     public static String read(String nombreArchivo){
         try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {

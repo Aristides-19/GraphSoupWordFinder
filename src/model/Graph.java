@@ -65,7 +65,8 @@ public class Graph<T> {
     /**
      * Add a new edge between two vertices, if a vertex does not exist, it is
      * created at that index with null data. You must replace the data of a node
-     * created by this method to avoid a NullPointerException
+     * created by this method to avoid a NullPointerException. Besides, if the
+     * edge already exists, it will not be created again.
      *
      * @param from the vertex A from the edge
      * @param to the vertex B from the edge

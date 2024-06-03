@@ -68,6 +68,12 @@ public class LinkedList<T> implements Iterable<T> {
 
     }
 
+    /**
+     * Verifies if the object itself is contained in the list
+     *
+     * @param element object to be compared
+     * @return true if the object is contained, else false
+     */
     public boolean contains(T element) {
         for (T node : this) {
             if (node == element) {
