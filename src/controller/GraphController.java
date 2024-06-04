@@ -41,7 +41,7 @@ public class GraphController {
 
         for (int i = 0; i < graph.getMaxVertices() - 1; i++) {
 
-            if (i + 1 % 4 != 0) {
+            if ((i + 1) % 4 != 0) {
                 graph.addEdges(i, i + 1);
             }
 
