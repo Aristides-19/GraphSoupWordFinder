@@ -1,6 +1,7 @@
 package controller;
 
 import model.Graph;
+import model.LinkedList;
 
 /**
  *

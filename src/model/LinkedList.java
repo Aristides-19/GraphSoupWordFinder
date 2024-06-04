@@ -4,11 +4,14 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
+ * A Singly Linked List with last and first node. It is iterable through a
+ * For-Each
+ *
  *
  * @author Arístides Pérez & Jesús Duarte
  * @param <T> nodes can hold any object
  */
-public class LinkedList<T> implements Iterable<T> {
+public class LinkedList<T> implements Iterable<T>, Cloneable {
 
     private Node<T> first;
     private Node<T> last;
@@ -21,7 +24,7 @@ public class LinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * Inserts a node to the end of the list
+     * Insert a node to the end of the list. Complexity: O(1)
      *
      * @param data data of the node that will be inserted
      */
@@ -39,8 +42,28 @@ public class LinkedList<T> implements Iterable<T> {
     }
 
     /**
+     * Insert a node to the beginning of the list. Complexity: O(1)
+     *
+     * @param data data of the node that will be inserted
+     */
+    public void insertAtFirst(T data) {
+        Node<T> newNode = new Node<>(data);
+
+        if (isEmpty()) {
+            first = newNode;
+            last = newNode;
+        } else {
+            newNode.setNext(first);
+            first = newNode;
+        }
+
+        size++;
+    }
+
+    /**
      * Get a Node Data from the list by his index, it can throw an
-     * IndexOutOfBoundsException
+     * IndexOutOfBoundsException. Complexity: O(n) and O(1) if the node is the
+     * first or last
      *
      * @param index index from the node to request, starts at zero
      * @return the Node data
@@ -54,6 +77,9 @@ public class LinkedList<T> implements Iterable<T> {
 
         if (index < 0 || index >= size || isEmpty()) {
             throw new IndexOutOfBoundsException("Index Out of List Size: " + index);
+
+        } else if (index == size - 1) {
+            return nodeItSelf ? last : last.getData();
 
         } else {
             Node<T> aux = first;
@@ -86,7 +112,8 @@ public class LinkedList<T> implements Iterable<T> {
 
     /**
      * Delete a Node from the list by his index, it can throw an
-     * IndexOutOfBoundsException
+     * IndexOutOfBoundsException. Complexity: O(n) and O(1) if the node is the
+     * first.
      *
      * @param index index from the node to delete, starts at zero
      * @throws IndexOutOfBoundsException if the index is out of range
@@ -94,7 +121,7 @@ public class LinkedList<T> implements Iterable<T> {
     public void delete(int index) {
         Node<T> toDelete = (Node<T>) get(index, true);
 
-        // not last or first case
+        // not first case
         if (index != 0) {
             Node<T> aux = (Node<T>) get(index - 1, true);
             aux.setNext(toDelete.getNext());
@@ -126,7 +153,7 @@ public class LinkedList<T> implements Iterable<T> {
             return toReturn.substring(0, toReturn.length() - 2) + "]";
         }
 
-        return "";
+        return "[]";
     }
 
     /**
@@ -147,6 +174,11 @@ public class LinkedList<T> implements Iterable<T> {
 
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     /**

@@ -42,18 +42,18 @@ public class GraphController {
         for (int i = 0; i < graph.getMaxVertices() - 1; i++) {
 
             if ((i + 1) % 4 != 0) {
-                graph.addEdges(i, i + 1);
+                graph.addEdge(i, i + 1);
             }
 
             if (i + 1 < 13) {
                 if ((i + 1) % 4 != 1) {
-                    graph.addEdges(i, i + 3);
+                    graph.addEdge(i, i + 3);
                 }
 
-                graph.addEdges(i, i + 4);
+                graph.addEdge(i, i + 4);
 
                 if ((i + 1) % 4 != 0) {
-                    graph.addEdges(i, i + 5);
+                    graph.addEdge(i, i + 5);
                 }
             }
         }

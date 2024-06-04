@@ -10,7 +10,7 @@ public class Node<T> {
     private Node next;
     private T data;
 
-    Node(T data) {
+    protected Node(T data) {
         this.next = null;
         this.data = data;
     }

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.NoSuchElementException;
+
 /**
  * Creates a undirected graph where its vertices are connected by bidirectional
  * edges
@@ -8,7 +10,6 @@ package model;
  * @param <T> vertices can hold any object
  */
 public class Graph<T> {
-// TODO missing methods: getVertex, getNeighbors, degreeIn, degreeOut
 
     private int size, currentVertices;
     final private int maxVertices;
@@ -63,38 +64,32 @@ public class Graph<T> {
     }
 
     /**
-     * Add a new edge between two vertices, if a vertex does not exist, it is
-     * created at that index with null data. You must replace the data of a node
-     * created by this method to avoid a NullPointerException. Besides, if the
-     * edge already exists, it will not be created again.
+     * Add a new edge between two vertices.
      *
      * @param from the vertex A from the edge
      * @param to the vertex B from the edge
-     * @throws IllegalStateException if the index is already took by another
-     * vertex
      * @throws IllegalArgumentException if From argument equals to To
      * @throws ArrayIndexOutOfBoundsException if the specified index is out of
      * range
      */
-    public void addEdges(int from, int to) {
+    public void addEdge(int from, int to) {
         verifyIndex(from);
         verifyIndex(to);
 
         if (from == to) {
             throw new IllegalArgumentException("FROM argument can not be equals to TO");
         }
-        if (vertices[from] == null) {
-            addVertex(null, from);
-        }
-        if (vertices[to] == null) {
-            addVertex(null, to);
-        }
 
-        if (!vertices[from].getEdges().contains(vertices[to])) {
+        if (vertices[from] != null && vertices[to] != null) {
 
-            vertices[from].getEdges().insert(vertices[to]);
-            vertices[to].getEdges().insert(vertices[from]);
-            size++;
+            if (!vertices[from].getEdges().contains(vertices[to])) {
+
+                vertices[from].getEdges().insert(vertices[to]);
+                vertices[to].getEdges().insert(vertices[from]);
+                size++;
+            }
+        } else {
+            throw new NoSuchElementException("The vertex FROM or TO does not exist");
         }
     }
 
@@ -112,10 +107,53 @@ public class Graph<T> {
         verifyIndex(index);
 
         if (vertices[index] == null) {
-            throw new NullPointerException("This vertex does not exist");
+            throw new NoSuchElementException("This vertex does not exist");
         }
 
         vertices[index].setData(data);
+    }
+
+    /**
+     * Get a Vertex Object by its index
+     *
+     * @param index index of the vertex
+     * @return the vertex
+     */
+    public Vertex<T> getVertex(int index) {
+        verifyIndex(index);
+
+        if (vertices[index] != null) {
+            return vertices[index];
+        } else {
+            throw new NoSuchElementException("This vertex does not exist");
+        }
+    }
+
+    /**
+     * Get a Shallow Copy of the neighbors vertices contained by a Linked List
+     *
+     * @param index index of the vertex to get neighbors
+     * @return a Linked List containing vertex objects
+     * @throws CloneNotSupportedException
+     */
+    public LinkedList<Vertex<T>> getNeighbors(int index) throws CloneNotSupportedException {
+        return getVertex(index).getNeighbors();
+    }
+
+    /**
+     * Get the degree of a vertex (number of neighbors)
+     *
+     * @param index index of the vertex
+     * @return int degree
+     */
+    public int degree(int index) {
+        verifyIndex(index);
+
+        if (vertices[index] != null) {
+            return vertices[index].degree();
+        } else {
+            throw new NoSuchElementException("This vertex does not exist");
+        }
     }
 
     /**
@@ -139,30 +177,6 @@ public class Graph<T> {
         }
 
         return "";
-    }
-
-    /**
-     * It verifies if the index is valid for the graph
-     *
-     */
-    private void verifyIndex(int index) {
-        if (index < 0 || index >= maxVertices) {
-            throw new ArrayIndexOutOfBoundsException("Index must be between 0 and " + (maxVertices - 1));
-        }
-    }
-
-    /**
-     * Search the first ocurrence of null index
-     *
-     * @return the index number equals to null. It returns -1 if not found
-     */
-    private int searchNullIndex() {
-        for (int i = 0; i < maxVertices; i++) {
-            if (vertices[i] == null) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     /**
@@ -197,4 +211,27 @@ public class Graph<T> {
         return currentVertices;
     }
 
+    /**
+     * It verifies if the index is valid for the graph
+     *
+     */
+    private void verifyIndex(int index) {
+        if (index < 0 || index >= maxVertices) {
+            throw new ArrayIndexOutOfBoundsException("Index must be between 0 and " + (maxVertices - 1));
+        }
+    }
+
+    /**
+     * Search the first ocurrence of null index
+     *
+     * @return the index number equals to null. It returns -1 if not found
+     */
+    private int searchNullIndex() {
+        for (int i = 0; i < maxVertices; i++) {
+            if (vertices[i] == null) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

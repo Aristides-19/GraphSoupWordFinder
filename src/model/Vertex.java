@@ -8,10 +8,10 @@ package model;
 public class Vertex<T> {
 
     private T data;
-    final private LinkedList<Vertex> edges;
+    final private LinkedList<Vertex<T>> edges;
     final int position;
 
-    public Vertex(T data, int position) {
+    protected Vertex(T data, int position) {
         this.data = data;
         this.edges = new LinkedList<>();
         this.position = position;
@@ -36,16 +36,35 @@ public class Vertex<T> {
         return toReturn;
     }
 
+    /**
+     * Get a Shallow Copy of the neighbors vertices contained by a Linked List
+     *
+     * @return a Linked List containing vertex objects
+     * @throws CloneNotSupportedException
+     */
+    public LinkedList<Vertex<T>> getNeighbors() throws CloneNotSupportedException {
+        return (LinkedList<Vertex<T>>) edges.clone();
+    }
+
+    /**
+     * A not copy version of the method getNeighbors
+     *
+     * @return a Linked List containing vertex objects
+     */
+    protected LinkedList<Vertex<T>> getEdges() {
+        return edges;
+    }
+
+    public int degree() {
+        return edges.getSize();
+    }
+
     public T getData() {
         return data;
     }
 
     public void setData(T data) {
         this.data = data;
-    }
-
-    public LinkedList<Vertex> getEdges() {
-        return edges;
     }
 
     public int getPosition() {
