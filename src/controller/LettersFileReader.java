@@ -10,6 +10,12 @@ import java.io.IOException;
  */
 public class LettersFileReader {
     
+    /**
+     * Read the txt file and convert it to a string
+     *
+     * @param nombreArchivo file we want to read
+     * @return the archive txt in a string
+     */
     public static String read(String nombreArchivo){
         try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
             StringBuilder contenido = new StringBuilder();
@@ -28,6 +34,12 @@ public class LettersFileReader {
         return null;
     }
     
+    /**
+     * Split a string into enters
+     *
+     * @param texto string that you want to split
+     * @return the archive txt divided by enters
+     */
     public static String[] separate(String texto){
         String[] lineas = texto.split("\n");
         return lineas;
