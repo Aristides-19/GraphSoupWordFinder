@@ -40,8 +40,19 @@ public class LettersFileReader {
      * @param texto string that you want to split
      * @return the archive txt divided by enters
      */
-    public static String[] separate(String texto){
+    public static String[] separateByEnter(String texto){
         String[] lineas = texto.split("\n");
+        return lineas;
+    }
+    
+    /**
+     * Split a string into commas
+     *
+     * @param texto string that you want to split
+     * @return the archive txt divided by commas
+     */
+    public static String[] separateByComma(String texto){
+        String[] lineas = texto.split(",");
         return lineas;
     }
 }
