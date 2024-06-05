@@ -18,6 +18,8 @@ public class Main {
         System.out.println(graph.toString());
 
         WordSearchModel.bfsSearch(graph, 0);
+        System.out.println();
+        WordSearchModel.dfsSearch(graph, 0);
     }
 
 }

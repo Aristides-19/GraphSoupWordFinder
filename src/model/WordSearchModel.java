@@ -7,7 +7,7 @@ package model;
 public class WordSearchModel {
 
     
-    public static void dfsSearch(Graph graph, int startVertex){
+    public static void dfsSearch(Graph graph, int startVertex) {
         boolean[] visited = new boolean[graph.getMaxVertices()];
         dfs(graph, startVertex, visited);
     }
@@ -17,6 +17,7 @@ public class WordSearchModel {
         visited[startVertex] = true;
         Vertex root = graph.getVertex(startVertex);
         LinkedList<Vertex> neighbors = root.getEdges();
+        System.out.print(root.getData() + " ");
         
         for (var neighbor : neighbors){
             int position = neighbor.getPosition();
@@ -24,6 +25,20 @@ public class WordSearchModel {
                 dfs(graph, position, visited);
             }
         }
+    }
+
+    public static Vertex getRoot(Graph graph, String word) {
+        Character rootChar = word.charAt(0);
+        Vertex V;
+
+        for (int i = 0; i < graph.getMaxVertices(); i++) {
+            V = graph.getVertex(i);
+            if (V.getData() == rootChar) {
+                return V;
+            }
+        }
+
+        return null;
     }
 
     /**
