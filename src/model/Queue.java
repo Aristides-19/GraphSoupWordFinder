@@ -22,7 +22,7 @@ public class Queue<T> {
      * @return head of the queue
      */
     public T getHead() {
-        return queue.getLast();
+        return queue.getFirst();
     }
 
     /**

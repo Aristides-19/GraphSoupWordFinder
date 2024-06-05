@@ -5,13 +5,17 @@ package model;
  * @author Jesús Duarte & Arístides Pérez
  */
 public class WordSearchModel {
-    
-    public Vertex dfsSearch(Graph graph, String[] str){
-        
-        return null;
+
+    public void dfsSearch(Graph graph, int startVertex) {
 
     }
-    
+
+    /**
+     * Print the traverse of a Breadth First Search algorithm in a graph
+     *
+     * @param graph the graph to be traversed
+     * @param startVertex the index of the vertex to start the traverse
+     */
     public static void bfsSearch(Graph graph, int startVertex) {
         
         int currentNeighbor;

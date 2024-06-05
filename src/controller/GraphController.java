@@ -15,9 +15,9 @@ public class GraphController {
      * the word soup
      * @return the graph object with edges
      */
-    static Graph createGraph(String[] letters) {
-        Graph graph = new Graph(16);
-        String info;
+    static Graph<Character> createGraph(Character[] letters) {
+        Graph<Character> graph = new Graph(16);
+        Character info;
 
         for (int i = 0; i < graph.getMaxVertices(); i++) {
             info = letters[i];
