@@ -6,10 +6,23 @@ package model;
  */
 public class WordSearchModel {
     
-    public Vertex dfsSearch(Graph graph, String[] str){
+    public static void dfsSearch(Graph graph, int startVertex){
+        boolean[] visited = new boolean[graph.getMaxVertices()];
+        dfs(graph, startVertex, visited);
+    }
+    
+    private static void dfs(Graph graph, int startVertex, boolean[] visited){
         
-        return null;
-
+        visited[startVertex] = true;
+        Vertex root = graph.getVertex(startVertex);
+        LinkedList<Vertex> neighbors = root.getEdges();
+        
+        for (var neighbor : neighbors){
+            int position = neighbor.getPosition();
+            if(!visited[position]){
+                dfs(graph, position, visited);
+            }
+        }
     }
     
     public static void bfsSearch(Graph graph, int startVertex) {
