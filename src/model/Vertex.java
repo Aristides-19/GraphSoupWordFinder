@@ -37,17 +37,7 @@ public class Vertex<T> {
     }
 
     /**
-     * Get a Shallow Copy of the neighbors vertices contained by a Linked List
-     *
-     * @return a Linked List containing vertex objects
-     * @throws CloneNotSupportedException
-     */
-    public LinkedList<Vertex<T>> getNeighbors() throws CloneNotSupportedException {
-        return (LinkedList<Vertex<T>>) edges.clone();
-    }
-
-    /**
-     * A not copy version of the method getNeighbors
+     * A LinkedList containing neighbors of the vertex
      *
      * @return a Linked List containing vertex objects
      */
@@ -55,6 +45,11 @@ public class Vertex<T> {
         return edges;
     }
 
+    /**
+     * Get the degree of a vertex (number of neighbors)
+     *
+     * @return integer degree
+     */
     public int degree() {
         return edges.getSize();
     }

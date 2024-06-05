@@ -134,17 +134,16 @@ public class Graph<T> {
      *
      * @param index index of the vertex to get neighbors
      * @return a Linked List containing vertex objects
-     * @throws CloneNotSupportedException
      */
-    public LinkedList<Vertex<T>> getNeighbors(int index) throws CloneNotSupportedException {
-        return getVertex(index).getNeighbors();
+    public LinkedList<Vertex<T>> getNeighbors(int index) {
+        return getVertex(index).getEdges();
     }
 
     /**
      * Get the degree of a vertex (number of neighbors)
      *
      * @param index index of the vertex
-     * @return int degree
+     * @return integer degree
      */
     public int degree(int index) {
         verifyIndex(index);

@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  * @author Arístides Pérez & Jesús Duarte
  * @param <T> nodes can hold any object
  */
-public class LinkedList<T> implements Iterable<T>, Cloneable {
+public class LinkedList<T> implements Iterable<T> {
 
     private Node<T> first;
     private Node<T> last;
@@ -174,11 +174,6 @@ public class LinkedList<T> implements Iterable<T>, Cloneable {
 
     public int getSize() {
         return size;
-    }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
     }
 
     /**
