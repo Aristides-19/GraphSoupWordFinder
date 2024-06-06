@@ -89,7 +89,7 @@ public class WordSearchModel {
      * @param word the word we are going to look for
      * @return a boolean value that depends on whether the word is in the graph
      */
-    public static boolean bfs(Graph graph, Vertex root, char[] word) {
+    private static boolean bfs(Graph graph, Vertex root, char[] word) {
         
         int startVertex = root.getPosition();
         int currentNeighbor;

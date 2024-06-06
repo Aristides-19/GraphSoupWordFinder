@@ -6,7 +6,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import controller.App;
 import javax.swing.JOptionPane;
-import model.Graph;
 
 /**
  * Launch Menu to let the user select the file with correct structure
@@ -17,7 +16,6 @@ public class FileSelector extends javax.swing.JFrame {
 
     private File chosenFile;
     private int result;
-    private Graph<Character> soupGraph;
 
     /**
      * Creates new form FileSelector
@@ -174,11 +172,11 @@ public class FileSelector extends javax.swing.JFrame {
      */
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
 
-        soupGraph = App.sendFileData(path.getText());
+        boolean success = App.sendFileData(path.getText());
 
-        if (soupGraph != null) {
+        if (success) {
             this.setVisible(false);
-            Menu mainMenu = new Menu(soupGraph);
+            Menu mainMenu = new Menu();
             mainMenu.setVisible(true);
             this.dispose();
         } else {

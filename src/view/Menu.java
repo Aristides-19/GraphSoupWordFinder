@@ -2,8 +2,9 @@ package view;
 
 import java.awt.Frame;
 import javax.swing.JButton;
-import model.Graph;
 import model.Vertex;
+import controller.App;
+import javax.swing.DefaultListModel;
 
 /**
  * Main Menu where the user can interact with the whole app and graph
@@ -11,23 +12,29 @@ import model.Vertex;
  * @author Arístides Pérez
  */
 public class Menu extends javax.swing.JFrame {
-
+    private final DefaultListModel<String> dictionaryModel = new DefaultListModel<>();
     /**
      * Creates new form Menu to set the board with vertices data
      *
-     * @param soupGraph graph to create board
      */
-    public Menu(Graph<Character> soupGraph) {
+    public Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+
+        // dictionary View Initialization 
+        for (String word : App.getDictionary()) {
+            dictionaryModel.addElement(word);
+        }
+        dictionaryList.setModel(dictionaryModel);
+
+        // Board Initialization
         JButton[] boardArray = {aBoard, bBoard, cBoard, dBoard, eBoard,
             fBoard, gBoard, hBoard, iBoard, jBoard, kBoard, lBoard, mBoard,
             nBoard, oBoard, pBoard};
-
-        Vertex[] vertices = soupGraph.getVertices();
+        Vertex[] vertices = App.getGraph().getVertices();
         
-        for (int i = 0; i < soupGraph.getMaxVertices(); i++) {
+        for (int i = 0; i < App.getGraph().getMaxVertices(); i++) {
 
             boardArray[i].setText(vertices[i].getData().toString());
         }
@@ -63,6 +70,8 @@ public class Menu extends javax.swing.JFrame {
         nBoard = new javax.swing.JButton();
         oBoard = new javax.swing.JButton();
         pBoard = new javax.swing.JButton();
+        scrollDictionary = new javax.swing.JScrollPane();
+        dictionaryList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -100,7 +109,7 @@ public class Menu extends javax.swing.JFrame {
         titleBarLayout.setHorizontalGroup(
             titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titleBarLayout.createSequentialGroup()
-                .addContainerGap(476, Short.MAX_VALUE)
+                .addContainerGap(596, Short.MAX_VALUE)
                 .addComponent(minimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -115,7 +124,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 40));
+        Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 40));
 
         board.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -309,6 +318,15 @@ public class Menu extends javax.swing.JFrame {
 
         Main.add(board, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
+        dictionaryList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        scrollDictionary.setViewportView(dictionaryList);
+
+        Main.add(scrollDictionary, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 60, 230));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -329,6 +347,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
         this.dispose();
+
     }//GEN-LAST:event_exitButtonMouseClicked
 
 
@@ -339,6 +358,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel board;
     private javax.swing.JButton cBoard;
     private javax.swing.JButton dBoard;
+    private javax.swing.JList<String> dictionaryList;
     private javax.swing.JButton eBoard;
     private javax.swing.JLabel exitButton;
     private javax.swing.JButton fBoard;
@@ -353,6 +373,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton nBoard;
     private javax.swing.JButton oBoard;
     private javax.swing.JButton pBoard;
+    private javax.swing.JScrollPane scrollDictionary;
     private javax.swing.JPanel titleBar;
     // End of variables declaration//GEN-END:variables
 
