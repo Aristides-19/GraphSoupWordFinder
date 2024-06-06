@@ -210,6 +210,10 @@ public class Graph<T> {
         return currentVertices;
     }
 
+    /**
+     *
+     * @return list of vertices
+     */
     public Vertex<T>[] getVertices() {
         return vertices;
     }

@@ -6,6 +6,13 @@ package model;
  */
 public class WordSearchModel {
 
+    /**
+     * Looks for the first letter of the word in the list of vertices of the graph to use as a root in the Depth-First-Algorithm
+     *
+     * @param graph the graph where we are going to search for the word
+     * @param word the word we are going to look for
+     * @return a boolean value that depends on whether the word is in the graph
+     */
     public static boolean dfsSearch(Graph graph, char[] word) {
         boolean[] visited = new boolean[graph.getMaxVertices()];
         boolean isWord = false;
@@ -21,6 +28,17 @@ public class WordSearchModel {
         return isWord;
     }
     
+    /**
+     * Search from the second letter onwards
+     *
+     * @param graph the graph where we are going to search for the word
+     * @param word the word we are going to look for
+     * @param letter index of the letter of the word that we are going to compare
+     * @param root vertex whose adjacencies we will use
+     * @param visited arrays indicating which vertices were visited
+     * @param search boolean indicating whether the word was founded
+     * @return a boolean value that depends on whether the word is in the graph
+     */
     private static boolean dfs(Graph graph, char[] word, int letter, Vertex root, boolean[] visited, boolean search){
         System.out.print(root.getData() + " ");
         
@@ -40,20 +58,6 @@ public class WordSearchModel {
             search = true;
         } 
         return search;
-    }
-
-    public static Vertex getRoot(Graph graph, String word) {
-        Character rootChar = word.charAt(0);
-        Vertex V;
-
-        for (int i = 0; i < graph.getMaxVertices(); i++) {
-            V = graph.getVertex(i);
-            if (V.getData() == rootChar) {
-                return V;
-            }
-        }
-
-        return null;
     }
 
     /**
