@@ -74,7 +74,8 @@ public class LettersFileReader {
     }
 
     /**
-     * Write to the path file to update the dictionary
+     * Write to the path file to update the dictionary, if the file does not
+     * exists, it is created
      *
      * @param dictionary dictionary to write
      * @param graph graph created before with word soup letters

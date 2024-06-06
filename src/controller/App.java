@@ -50,6 +50,30 @@ public class App {
         return false;
     }
 
+    /**
+     * Add a word to the dictionary if the word is valid
+     *
+     * @param word word to add
+     * @return true if the addition proccess was succesful, false otherwise
+     */
+    public static boolean addDictionaryWord(String word) {
+        if (LettersFileReader.isValidWord(word) && !dictionary.contains(word)) {
+            dictionary.insert(word);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Update the text file loaded by the user
+     *
+     * @return true if the process was succesful, false otherwise
+     */
+    public static boolean updateDictionaryFile() {
+        boolean result = LettersFileReader.write(dictionary, soupGraph);
+        return result;
+    }
+
     public static LinkedList<String> getDictionary() {
         return dictionary;
     }

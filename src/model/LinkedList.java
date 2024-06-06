@@ -102,7 +102,11 @@ public class LinkedList<T> implements Iterable<T> {
      */
     public boolean contains(T element) {
         for (T node : this) {
-            if (node == element) {
+            if (element instanceof String) {
+                if (element.equals(node)) {
+                    return true;
+                }
+            } else if (element == node) {
                 return true;
             }
         }
