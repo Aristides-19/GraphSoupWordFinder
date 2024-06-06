@@ -1,9 +1,14 @@
 package controller;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import model.Queue;
+import model.LinkedList;
+import model.Graph;
+import model.Vertex;
 
 /**
  * Class to read a text file with a determined structure. The dictionary must be
@@ -13,6 +18,8 @@ import model.Queue;
  */
 public class LettersFileReader {
 
+    static private String filePath;
+
     /**
      * Read the txt file and convert it to a string
      *
@@ -21,6 +28,7 @@ public class LettersFileReader {
      * word soup
      */
     public static String[][] read(String path) {
+        filePath = path;
         try {
             File file = new File(path);
             String tab = "", dic = "", data = "";
@@ -63,5 +71,34 @@ public class LettersFileReader {
 
         }
         return null;
+    }
+
+    /**
+     * Write to the path file to update the dictionary
+     *
+     * @param dictionary dictionary to write
+     * @param graph graph created before with word soup letters
+     * @return true if the writing was succesful, otherwise false
+     */
+    public static boolean write(LinkedList<String> dictionary, Graph graph) {
+        String toWrite = "dic\n";
+        for (String word : dictionary) {
+            toWrite += word + "\n";
+        }
+        toWrite += "/dic\ntab\n";
+
+        Vertex[] vertices = graph.getVertices();
+
+        for (int i = 0; i < vertices.length; i++) {
+            toWrite += i < vertices.length - 1 ? vertices[i].getData() + "," : vertices[i].getData() + "\n";
+        }
+        toWrite += "/tab";
+
+        try (var writer = new FileWriter(filePath)) {
+            writer.write(toWrite);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 }
