@@ -210,6 +210,10 @@ public class Graph<T> {
         return currentVertices;
     }
 
+    public Vertex<T>[] getVertices() {
+        return vertices;
+    }
+
     /**
      * It verifies if the index is valid for the graph
      *
