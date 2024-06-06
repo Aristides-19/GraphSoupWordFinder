@@ -52,7 +52,7 @@ public class LettersFileReader {
                     }
 
                     if (dicB && !dicBB) {
-                        dic += data + ",";
+                        dic += isValidWord(data) ? data + "," : "";
                     } else if (tabB && !tabBB) {
                         tab += data;
                     }
@@ -100,5 +100,28 @@ public class LettersFileReader {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    /**
+     * Verifies if the word is valid
+     *
+     * @param word word to validate
+     * @return false if the word length is less than 3 or if the word contains a
+     * special character
+     */
+    public static boolean isValidWord(String word) {
+        if (word.length() < 3) {
+            return false;
+        }
+
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(0);
+
+            if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

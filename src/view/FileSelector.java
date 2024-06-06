@@ -45,8 +45,9 @@ public class FileSelector extends javax.swing.JFrame {
         fileChoose = new javax.swing.JButton();
         continueButton = new javax.swing.JButton();
         titleBar = new javax.swing.JPanel();
-        exitButton = new javax.swing.JLabel();
+        helpButton = new javax.swing.JLabel();
         minimizeButton = new javax.swing.JLabel();
+        exitButton1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -113,17 +114,17 @@ public class FileSelector extends javax.swing.JFrame {
         titleBar.setBackground(new java.awt.Color(255, 255, 255));
         titleBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        exitButton.setFont(new java.awt.Font("sansserif", 0, 22)); // NOI18N
-        exitButton.setForeground(new java.awt.Color(51, 51, 51));
-        exitButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        exitButton.setText("X");
-        exitButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        helpButton.setFont(new java.awt.Font("sansserif", 0, 22)); // NOI18N
+        helpButton.setForeground(new java.awt.Color(51, 51, 51));
+        helpButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        helpButton.setText("?");
+        helpButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        helpButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                exitButtonMouseClicked(evt);
+                helpButtonMouseClicked(evt);
             }
         });
-        titleBar.add(exitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 40, 40));
+        titleBar.add(helpButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 40));
 
         minimizeButton.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         minimizeButton.setForeground(new java.awt.Color(51, 51, 51));
@@ -136,6 +137,18 @@ public class FileSelector extends javax.swing.JFrame {
             }
         });
         titleBar.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 30, 40));
+
+        exitButton1.setFont(new java.awt.Font("sansserif", 0, 22)); // NOI18N
+        exitButton1.setForeground(new java.awt.Color(51, 51, 51));
+        exitButton1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        exitButton1.setText("X");
+        exitButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exitButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitButton1MouseClicked(evt);
+            }
+        });
+        titleBar.add(exitButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 40, 40));
 
         Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 40));
 
@@ -169,7 +182,8 @@ public class FileSelector extends javax.swing.JFrame {
             mainMenu.setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Error: verifica que tu archivo no está vacío o la ruta es correcta, además de contener la estructura correcta");
+            JOptionPane.showMessageDialog(this, "Error: verifica que tu archivo "
+                    + "no está vacío o la ruta es correcta, además de contener la estructura correcta");
         }
     }//GEN-LAST:event_continueButtonActionPerformed
 
@@ -190,9 +204,10 @@ public class FileSelector extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_fileChooseActionPerformed
 
-    private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_exitButtonMouseClicked
+    private void helpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpButtonMouseClicked
+        JOptionPane.showMessageDialog(this, "Las palabras que no tengan al menos "
+                + "3 letras o tengan caracteres especiales no serán tomadas en cuenta");
+    }//GEN-LAST:event_helpButtonMouseClicked
 
     private void pathKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pathKeyTyped
         if (path.getText().equals("Ruta del Archivo")) {
@@ -204,11 +219,16 @@ public class FileSelector extends javax.swing.JFrame {
         this.setState(Frame.ICONIFIED);
     }//GEN-LAST:event_minimizeButtonMouseClicked
 
+    private void exitButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButton1MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_exitButton1MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Main;
     private javax.swing.JButton continueButton;
-    private javax.swing.JLabel exitButton;
+    private javax.swing.JLabel exitButton1;
     private javax.swing.JButton fileChoose;
+    private javax.swing.JLabel helpButton;
     private javax.swing.JLabel minimizeButton;
     private javax.swing.JTextField path;
     private javax.swing.JSeparator pathSep;
