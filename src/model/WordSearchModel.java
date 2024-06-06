@@ -6,25 +6,40 @@ package model;
  */
 public class WordSearchModel {
 
-    
-    public static void dfsSearch(Graph graph, int startVertex) {
+    public static boolean dfsSearch(Graph graph, char[] word) {
         boolean[] visited = new boolean[graph.getMaxVertices()];
-        dfs(graph, startVertex, visited);
-    }
-    
-    private static void dfs(Graph graph, int startVertex, boolean[] visited){
+        boolean isWord = false;
         
-        visited[startVertex] = true;
-        Vertex root = graph.getVertex(startVertex);
-        LinkedList<Vertex> neighbors = root.getEdges();
-        System.out.print(root.getData() + " ");
-        
-        for (var neighbor : neighbors){
-            int position = neighbor.getPosition();
-            if(!visited[position]){
-                dfs(graph, position, visited);
+        for(var vertice : graph.getVertices()){
+            if(vertice.getData().equals(word[0])){
+                isWord = dfs(graph, word, 1, vertice, visited, isWord);
+                if (isWord){
+                    break;
+                }
             }
         }
+        return isWord;
+    }
+    
+    private static boolean dfs(Graph graph, char[] word, int letter, Vertex root, boolean[] visited, boolean search){
+        System.out.print(root.getData() + " ");
+        
+        if (letter<word.length){
+            int startVertex = root.position;
+            visited[startVertex] = true;
+            LinkedList<Vertex> neighbors = root.getEdges();
+
+            for (var neighbor : neighbors){
+                int position = neighbor.getPosition();
+                if((!visited[position]) & (neighbor.getData().equals(word[letter]))){
+                    search = dfs(graph, word, letter+1, neighbor, visited, search);
+                }
+            }
+        }
+        else{
+            search = true;
+        } 
+        return search;
     }
 
     public static Vertex getRoot(Graph graph, String word) {
