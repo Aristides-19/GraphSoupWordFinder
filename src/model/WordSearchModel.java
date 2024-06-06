@@ -61,35 +61,81 @@ public class WordSearchModel {
     }
 
     /**
-     * Print the traverse of a Breadth First Search algorithm in a graph
+     * Looks for the first letter of the word in the list of vertices of the graph to use as a root in the Breadth-First-Algorithm
      *
-     * @param graph the graph to be traversed
-     * @param startVertex the index of the vertex to start the traverse
+     * @param graph the graph where we are going to search for the word
+     * @param word the word we are going to look for
+     * @return a boolean value that depends on whether the word is in the graph
      */
-    public static void bfsSearch(Graph graph, int startVertex) {
-
-        int currentNeighbor;
-        Queue<Vertex> queue = new Queue<>();
-        boolean[] visited = new boolean[graph.getMaxVertices()];
-
-        queue.enqueue(graph.getVertex(startVertex));
-        visited[startVertex] = true;
-
-        while (!queue.isEmpty()) {
-
-            Vertex currentVertex = queue.dequeue();
-            System.out.print(currentVertex.getData() + " ");
-            LinkedList<Vertex> neighbors = currentVertex.getEdges();
-
-            for (var neighbor : neighbors) {
-                currentNeighbor = neighbor.getPosition();
-
-                if (!visited[currentNeighbor]) {
-                    visited[currentNeighbor] = true;
-                    queue.enqueue(neighbor);
+    public static boolean bfsSearch(Graph graph, char[] word) {
+        boolean isWord = false;
+        
+        for(var vertice : graph.getVertices()){
+            if(vertice.getData().equals(word[0])){
+                isWord = bfs(graph, vertice, word);
+                if (isWord){
+                    break;
                 }
             }
         }
+        return isWord;
+    }
+    
+    /**
+     * Print the traverse of a Breadth First Search algorithm in a graph
+     *
+     * @param graph the graph to be traversed
+     * @param root bfs initial vertex
+     * @param word the word we are going to look for
+     * @return a boolean value that depends on whether the word is in the graph
+     */
+    public static boolean bfs(Graph graph, Vertex root, char[] word) {
+        
+        int startVertex = root.getPosition();
+        int currentNeighbor;
+        Queue<Vertex> queue = new Queue<>();
+        boolean[] visited = new boolean[graph.getMaxVertices()];
+        int caracter = 1;
+        int counter1 = 1;
+        int counter2 = 0;
+        boolean counter3 = false;
+        boolean isWord = false;
+        
+        queue.enqueue(root);
+        visited[startVertex] = true;
+        
+        while (!queue.isEmpty() & caracter<word.length) {
+            
+            counter1--;
+            
+            Vertex currentVertex = queue.dequeue();
+            System.out.print(currentVertex.getData() + " ");
+            LinkedList<Vertex> neighbors = currentVertex.getEdges();
+            
+            for (var neighbor : neighbors) {
+                currentNeighbor = neighbor.getPosition();
 
+                if ((!visited[currentNeighbor]) & (neighbor.getData().equals(word[caracter]))) {
+                    visited[currentNeighbor] = true;
+                    queue.enqueue(neighbor);
+                    counter2++;
+                    counter3=true;
+                }
+            }
+            
+            if((counter1 == 0) & counter3){
+                caracter++;
+                counter1=counter2;
+                counter2=0;
+                counter3=false;
+                if (caracter==word.length){
+                    isWord = true;
+                    break;
+                }
+            }
+        }
+        
+        
+        return isWord;
     }
 }
