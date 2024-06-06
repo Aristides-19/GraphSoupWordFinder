@@ -1,58 +1,51 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 /**
+ * Class to read a text file with a determined structure. The dictionary must be
+ * between dic - /dic and letters must be between tab - /tab.
  *
- * @author Jesús Duarte
+ * @author Arístides Pérez
  */
 public class LettersFileReader {
-    
+
     /**
      * Read the txt file and convert it to a string
      *
-     * @param nombreArchivo file we want to read
-     * @return the archive txt in a string
+     * @param path path of the file txt
+     * @return Array2D of Strings... Array[0] is word dictionary and Array[1] is
+     * word soup
      */
-    public static String read(String nombreArchivo){
-        try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
-            StringBuilder contenido = new StringBuilder();
-            String linea;
+    public static String[][] read(String path) {
+        try {
+            File file = new File(path);
+            String tab = "", dic = "", data;
+            boolean dicBool = false;
 
-            while ((linea = br.readLine()) != null) {
-                contenido.append(linea).append("\n");
+            try (Scanner reader = new Scanner(file)) {
+
+                while (reader.hasNextLine()) {
+                    data = reader.nextLine();
+                    if (data.equals("/dic")) {
+                        dicBool = true;
+                    }
+
+                    if (!dicBool && !data.equals("dic")) {
+                        dic += data + ",";
+                    } else if (dicBool && !data.equals("tab") && !data.equals("/dic") && !data.equals("/tab")) {
+                        tab += data;
+                    }
+                }
             }
+            String[][] textFile = {dic.split(","), tab.split(",")};
 
-            String contenidoCompleto = contenido.toString();
-            System.out.println("Contenido del archivo:\n" + contenidoCompleto);
-            return contenidoCompleto;
-        } catch (IOException e) {
-            System.err.println("Error al leer el archivo: " + e.getMessage());
+            return textFile;
+        } catch (FileNotFoundException e) {
+
         }
         return null;
-    }
-    
-    /**
-     * Split a string into enters
-     *
-     * @param texto string that you want to split
-     * @return the archive txt divided by enters
-     */
-    public static String[] separateByEnter(String texto){
-        String[] lineas = texto.split("\n");
-        return lineas;
-    }
-    
-    /**
-     * Split a string into commas
-     *
-     * @param texto string that you want to split
-     * @return the archive txt divided by commas
-     */
-    public static String[] separateByComma(String texto){
-        String[] lineas = texto.split(",");
-        return lineas;
     }
 }

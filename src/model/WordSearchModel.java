@@ -6,22 +6,21 @@ package model;
  */
 public class WordSearchModel {
 
-    
     public static void dfsSearch(Graph graph, int startVertex) {
         boolean[] visited = new boolean[graph.getMaxVertices()];
         dfs(graph, startVertex, visited);
     }
-    
-    private static void dfs(Graph graph, int startVertex, boolean[] visited){
-        
+
+    private static void dfs(Graph graph, int startVertex, boolean[] visited) {
+
         visited[startVertex] = true;
         Vertex root = graph.getVertex(startVertex);
         LinkedList<Vertex> neighbors = root.getEdges();
         System.out.print(root.getData() + " ");
-        
-        for (var neighbor : neighbors){
+
+        for (var neighbor : neighbors) {
             int position = neighbor.getPosition();
-            if(!visited[position]){
+            if (!visited[position]) {
                 dfs(graph, position, visited);
             }
         }
@@ -48,14 +47,14 @@ public class WordSearchModel {
      * @param startVertex the index of the vertex to start the traverse
      */
     public static void bfsSearch(Graph graph, int startVertex) {
-        
+
         int currentNeighbor;
         Queue<Vertex> queue = new Queue<>();
         boolean[] visited = new boolean[graph.getMaxVertices()];
 
         queue.enqueue(graph.getVertex(startVertex));
         visited[startVertex] = true;
-        
+
         while (!queue.isEmpty()) {
 
             Vertex currentVertex = queue.dequeue();
@@ -64,7 +63,7 @@ public class WordSearchModel {
 
             for (var neighbor : neighbors) {
                 currentNeighbor = neighbor.getPosition();
-                
+
                 if (!visited[currentNeighbor]) {
                     visited[currentNeighbor] = true;
                     queue.enqueue(neighbor);
