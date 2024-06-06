@@ -155,6 +155,7 @@ public class FileSelector extends javax.swing.JFrame {
 
         if (success) {
             this.setVisible(false);
+            this.dispose(); // temporal
         } else {
             JOptionPane.showMessageDialog(this, "Error: verifica que tu archivo no está vacío o la ruta es correcta, además de contener la estructura correcta");
         }
