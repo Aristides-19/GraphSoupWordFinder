@@ -6,8 +6,10 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import controller.App;
 import javax.swing.JOptionPane;
+import model.Graph;
 
 /**
+ * Launch Menu to let the user select the file with correct structure
  *
  * @author Arístides Pérez
  */
@@ -15,9 +17,10 @@ public class FileSelector extends javax.swing.JFrame {
 
     private File chosenFile;
     private int result;
+    private Graph<Character> soupGraph;
 
     /**
-     * Creates new form NewJFrame
+     * Creates new form FileSelector
      */
     public FileSelector() {
         initComponents();
@@ -53,15 +56,16 @@ public class FileSelector extends javax.swing.JFrame {
         Main.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         title.setBackground(new java.awt.Color(255, 255, 255));
-        title.setFont(new java.awt.Font("Montserrat Medium", 1, 24)); // NOI18N
+        title.setFont(new java.awt.Font("Consolas", 1, 25)); // NOI18N
         title.setForeground(new java.awt.Color(51, 51, 51));
         title.setText("¡Sube tu Archivo!");
-        Main.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 220, 70));
+        Main.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 260, 70));
 
         wordIcon.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         wordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/scrabble.png"))); // NOI18N
         Main.add(wordIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 80, -1));
 
+        path.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         path.setText("Ruta del Archivo");
         path.setBorder(null);
         path.addActionListener(new java.awt.event.ActionListener() {
@@ -81,7 +85,7 @@ public class FileSelector extends javax.swing.JFrame {
         Main.add(pathSep, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 200, 20));
 
         fileChoose.setBackground(new java.awt.Color(255, 110, 66));
-        fileChoose.setFont(new java.awt.Font("Montserrat Medium", 1, 12)); // NOI18N
+        fileChoose.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         fileChoose.setForeground(new java.awt.Color(255, 255, 255));
         fileChoose.setText("...");
         fileChoose.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -94,7 +98,7 @@ public class FileSelector extends javax.swing.JFrame {
         Main.add(fileChoose, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, 20, 20));
 
         continueButton.setBackground(new java.awt.Color(255, 110, 66));
-        continueButton.setFont(new java.awt.Font("Montserrat Medium", 1, 12)); // NOI18N
+        continueButton.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         continueButton.setForeground(new java.awt.Color(255, 255, 255));
         continueButton.setText("Continuar");
         continueButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -149,13 +153,21 @@ public class FileSelector extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Verifies if the text file is correct, if true then calls Menu GUI with
+     * the graph board
+     *
+     * @param evt
+     */
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
 
-        boolean success = App.sendFileData(path.getText());
+        soupGraph = App.sendFileData(path.getText());
 
-        if (success) {
+        if (soupGraph != null) {
             this.setVisible(false);
-            this.dispose(); // temporal
+            Menu mainMenu = new Menu(soupGraph);
+            mainMenu.setVisible(true);
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Error: verifica que tu archivo no está vacío o la ruta es correcta, además de contener la estructura correcta");
         }

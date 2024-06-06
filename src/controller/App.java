@@ -26,9 +26,9 @@ public class App {
      * Bridge to send data of the file to read from view
      *
      * @param path path of the file txt
-     * @return true if the process was succesful, false otherwise
+     * @return the graph if the process was succesful, null otherwise
      */
-    public static boolean sendFileData(String path) {
+    public static Graph<Character> sendFileData(String path) {
         try {
             String[][] lettersFile = LettersFileReader.read(path);
             Character[] vertices = new Character[lettersFile[1].length];
@@ -43,10 +43,10 @@ public class App {
                 dictionary.insert(word);
             }
 
-            return true;
+            return soupGraph;
         } catch (Exception e) {
-            return false;
-        }
 
+        }
+        return null;
     }
 }
