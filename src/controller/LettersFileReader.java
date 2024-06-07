@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.chrono.ThaiBuddhistEra;
 import java.util.Scanner;
 import model.Queue;
 import model.LinkedList;
@@ -66,7 +67,7 @@ public class LettersFileReader {
             }
             String[][] textFile = {dic.split(","), tab.split(",")};
 
-            return dicB && dicBB && tabB && tabBB ? textFile : null;
+            return dicB && dicBB && tabB && tabBB && !dic.isEmpty() && !tab.isEmpty() ? textFile : null;
         } catch (FileNotFoundException e) {
 
         }

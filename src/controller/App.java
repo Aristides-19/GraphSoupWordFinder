@@ -51,6 +51,42 @@ public class App {
     }
 
     /**
+     * To search every dictionary word on the graph
+     *
+     * @param choice algorithm to traverse the graph. 0 is DFS and 1 is BFS.
+     * @return Array of strings containing a pair with word : found or not. The
+     * last element is the time delayed to find every word in the graph in
+     * miliseconds.
+     */
+    public static String[] searchWords(int choice) {
+        char[][] words = wordsToChars();
+        boolean[] wordsFound = new boolean[dictionary.getSize()];
+        String[] returnArray = new String[dictionary.getSize() + 1];
+
+        long startTime = System.nanoTime();
+        if (choice == 0) {
+            for (int i = 0; i < words.length; i++) {
+                wordsFound[i] = WordSearchModel.dfsSearch(soupGraph, words[i]);
+            }
+        } else if (choice == 1) {
+            for (int i = 0; i < words.length; i++) {
+                wordsFound[i] = WordSearchModel.bfsSearch(soupGraph, words[i]);
+            }
+        }
+        long endTime = System.nanoTime();
+        double time = (double) (endTime - startTime) / 1000000;
+
+        returnArray[dictionary.getSize()] = "Tiempo en encontrar las palabras: " + time + "ms";
+        int i = 0;
+        for (String word : dictionary) {
+            returnArray[i] = wordsFound[i] ? word + ": Encontrada" : word + ": No Encontrada";
+            i++;
+        }
+
+        return returnArray;
+    }
+
+    /**
      * Add a word to the dictionary if the word is valid
      *
      * @param word word to add
@@ -80,5 +116,27 @@ public class App {
 
     public static Graph<Character> getGraph() {
         return soupGraph;
+    }
+
+    /**
+     * Convert each word from the dictionary to an array of chars
+     *
+     * @return array of arrays of chars
+     */
+    private static char[][] wordsToChars() {
+        char[][] words = new char[dictionary.getSize()][];
+
+        int i = 0;
+        for (String word : dictionary) {
+            words[i] = new char[word.length()];
+
+            for (int j = 0; j < word.length(); j++) {
+                words[i][j] = word.charAt(j);
+            }
+
+            i++;
+        }
+
+        return words;
     }
 }

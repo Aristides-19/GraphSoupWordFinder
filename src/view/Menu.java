@@ -4,6 +4,7 @@ import java.awt.Frame;
 import javax.swing.JButton;
 import model.Vertex;
 import controller.App;
+import java.util.Arrays;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -29,7 +30,7 @@ public class Menu extends javax.swing.JFrame {
         for (String word : App.getDictionary()) {
             dictionaryModel.addElement(word);
         }
-        dictionaryList.setModel(dictionaryModel);
+        dictionaryList.setSelectedIndex(0);
 
         // Board Initialization
         JButton[] boardArray = {aBoard, bBoard, cBoard, dBoard, eBoard,
@@ -75,10 +76,12 @@ public class Menu extends javax.swing.JFrame {
         pBoard = new javax.swing.JButton();
         scrollDictionary = new javax.swing.JScrollPane();
         dictionaryList = new javax.swing.JList<>();
-        updateDictionaryButton = new javax.swing.JButton();
         wordSep = new javax.swing.JSeparator();
         wordField = new javax.swing.JTextField();
         wordAddButton = new javax.swing.JButton();
+        searchSelectedWord = new javax.swing.JButton();
+        updateDictionaryButton = new javax.swing.JButton();
+        searchDictionaryWords = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -325,27 +328,10 @@ public class Menu extends javax.swing.JFrame {
 
         Main.add(board, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
-        dictionaryList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        dictionaryList.setModel(dictionaryModel);
         scrollDictionary.setViewportView(dictionaryList);
 
         Main.add(scrollDictionary, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 60, 230));
-
-        updateDictionaryButton.setBackground(new java.awt.Color(255, 110, 66));
-        updateDictionaryButton.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        updateDictionaryButton.setForeground(new java.awt.Color(255, 255, 255));
-        updateDictionaryButton.setText("Actualizar Archivo Actual");
-        updateDictionaryButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        updateDictionaryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        updateDictionaryButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateDictionaryButtonActionPerformed(evt);
-            }
-        });
-        Main.add(updateDictionaryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 150, 260, 30));
 
         wordSep.setBackground(new java.awt.Color(255, 255, 255));
         wordSep.setForeground(new java.awt.Color(0, 0, 0));
@@ -379,6 +365,45 @@ public class Menu extends javax.swing.JFrame {
         });
         Main.add(wordAddButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 260, 30));
 
+        searchSelectedWord.setBackground(new java.awt.Color(255, 110, 66));
+        searchSelectedWord.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        searchSelectedWord.setForeground(new java.awt.Color(255, 255, 255));
+        searchSelectedWord.setText("Buscar una Palabra");
+        searchSelectedWord.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        searchSelectedWord.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        searchSelectedWord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchSelectedWordActionPerformed(evt);
+            }
+        });
+        Main.add(searchSelectedWord, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, 260, 30));
+
+        updateDictionaryButton.setBackground(new java.awt.Color(255, 110, 66));
+        updateDictionaryButton.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        updateDictionaryButton.setForeground(new java.awt.Color(255, 255, 255));
+        updateDictionaryButton.setText("Actualizar Archivo Actual");
+        updateDictionaryButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        updateDictionaryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        updateDictionaryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateDictionaryButtonActionPerformed(evt);
+            }
+        });
+        Main.add(updateDictionaryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 150, 260, 30));
+
+        searchDictionaryWords.setBackground(new java.awt.Color(255, 110, 66));
+        searchDictionaryWords.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        searchDictionaryWords.setForeground(new java.awt.Color(255, 255, 255));
+        searchDictionaryWords.setText("Buscar Todas las Palabras");
+        searchDictionaryWords.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        searchDictionaryWords.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        searchDictionaryWords.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchDictionaryWordsActionPerformed(evt);
+            }
+        });
+        Main.add(searchDictionaryWords, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 260, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -401,12 +426,45 @@ public class Menu extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_exitButtonMouseClicked
+
+
+    private void searchSelectedWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchSelectedWordActionPerformed
+
+    }//GEN-LAST:event_searchSelectedWordActionPerformed
+
+    private void wordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFieldActionPerformed
+        wordAddButtonActionPerformed(evt);
+    }//GEN-LAST:event_wordFieldActionPerformed
+
+    private void wordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_wordFieldKeyTyped
+        if (wordField.getText().equals("Metropolitana")) {
+            wordField.setText("");
+        }
+    }//GEN-LAST:event_wordFieldKeyTyped
+
+    /**
+     * add a word to the controller and view dictionary, only if the word is
+     * valid
+     *
+     * @param evt
+     */
+    private void wordAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordAddButtonActionPerformed
+        boolean success = App.addDictionaryWord(wordField.getText().toUpperCase());
+
+        if (success) {
+            dictionaryModel.addElement(wordField.getText().toUpperCase());
+            JOptionPane.showMessageDialog(this, "La palabra " + wordField.getText().toUpperCase() + " ha sido añadida con éxito");
+        } else {
+            JOptionPane.showMessageDialog(this, "La palabra " + wordField.getText().toUpperCase() + " no es válida, "
+                    + "debe contener 3 letras o más sin caracter especial o ya estar en el diccionario");
+        }
+    }//GEN-LAST:event_wordAddButtonActionPerformed
     
     /**
      * shows an optionPane to let the user choose to update the loaded file or
      * not, it calls controller App
-       * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void updateDictionaryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateDictionaryButtonActionPerformed
         int result = JOptionPane.showConfirmDialog(this, "¿Estás seguro que quieres actualizar el archivo cargado?",
@@ -421,32 +479,13 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_updateDictionaryButtonActionPerformed
 
-    private void wordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFieldActionPerformed
-        wordAddButtonActionPerformed(evt);
-    }//GEN-LAST:event_wordFieldActionPerformed
+    private void searchDictionaryWordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDictionaryWordsActionPerformed
+        String[] dictio1 = App.searchWords(0);
+        String[] dictio2 = App.searchWords(1);
 
-    private void wordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_wordFieldKeyTyped
-        if (wordField.getText().equals("Metropolitana")) {
-            wordField.setText("");
-        }
-    }//GEN-LAST:event_wordFieldKeyTyped
-    
-    /**
-     * add a word to the controller and view dictionary, only if the word is valid
-     * 
-     * @param evt 
-     */
-    private void wordAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordAddButtonActionPerformed
-        boolean success = App.addDictionaryWord(wordField.getText().toUpperCase());
-
-        if (success) {
-            dictionaryModel.addElement(wordField.getText().toUpperCase());
-            JOptionPane.showMessageDialog(this, "La palabra " + wordField.getText().toUpperCase() + " ha sido añadida con éxito");
-        } else {
-            JOptionPane.showMessageDialog(this, "La palabra " + wordField.getText().toUpperCase() + " no es válida, "
-                    + "debe contener 3 letras o más sin caracter especial o ya estar en el diccionario");
-        }
-    }//GEN-LAST:event_wordAddButtonActionPerformed
+        System.out.println(Arrays.toString(dictio1));
+        System.out.println(Arrays.toString(dictio2));
+    }//GEN-LAST:event_searchDictionaryWordsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -472,6 +511,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton oBoard;
     private javax.swing.JButton pBoard;
     private javax.swing.JScrollPane scrollDictionary;
+    private javax.swing.JButton searchDictionaryWords;
+    private javax.swing.JButton searchSelectedWord;
     private javax.swing.JPanel titleBar;
     private javax.swing.JButton updateDictionaryButton;
     private javax.swing.JButton wordAddButton;
