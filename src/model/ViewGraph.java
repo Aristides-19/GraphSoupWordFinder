@@ -1,56 +1,51 @@
 package model;
 
+import org.graphstream.graph.*;
+import org.graphstream.graph.implementations.*;
+
 /**
  *
- * @author Jesús Duarte & Arístides Pérez
+ * @author jesus
  */
-public class WordSearchModel {
-
-    /**
-     * Looks for the first letter of the word in the list of vertices of the graph to use as a root in the Depth-First-Algorithm
-     *
-     * @param graph the graph where we are going to search for the word
-     * @param word the word we are going to look for
-     * @return a boolean value that depends on whether the word is in the graph
-     */
-    public static boolean dfsSearch(GraphADS graph, char[] word) {
+public class ViewGraph {
+    
+    public static boolean viewDfs(GraphADS graph, char[] word){
+        Graph graphView = new SingleGraph("Grafo DFS");
         boolean[] visited = new boolean[graph.getMaxVertices()];
         boolean isWord = false;
         
         for(var vertice : graph.getVertices()){
             if(vertice.getData().equals(word[0])){
-                isWord = dfs(graph, word, 1, vertice, visited, isWord);
-                if (isWord){
-                    break;
-                }
+                Node nodo = graphView.addNode(String.valueOf(vertice.getPosition()));
+                nodo.setAttribute("ui.label", String.valueOf(vertice.getData()));
+                isWord = dfsLib(graph, graphView, word, 1, vertice, visited, isWord);
             }
         }
+        
+        graphView.setAttribute("ui.stylesheet", "node { text-size: 70px; size: 5px;}");
+        System.setProperty("org.graphstream.ui", "swing");
+        graphView.display();
         return isWord;
     }
     
-    /**
-     * Search from the second letter onwards
-     *
-     * @param graph the graph where we are going to search for the word
-     * @param word the word we are going to look for
-     * @param letter index of the letter of the word that we are going to compare
-     * @param root vertex whose adjacencies we will use
-     * @param visited arrays indicating which vertices were visited
-     * @param search boolean indicating whether the word was founded
-     * @return a boolean value that depends on whether the word is in the graph
-     */
-    private static boolean dfs(GraphADS graph, char[] word, int letter, Vertex root, boolean[] visited, boolean search){
+    public static boolean dfsLib(GraphADS graph, Graph graphView, char[] word, int letter, Vertex root, boolean[] visited, boolean search){
         System.out.print(root.getData() + " ");
         
         if (letter<word.length){
             int startVertex = root.position;
             visited[startVertex] = true;
             LinkedList<Vertex> neighbors = root.getEdges();
+            Node nodo;
 
             for (var neighbor : neighbors){
                 int position = neighbor.getPosition();
                 if((!visited[position]) & (neighbor.getData().equals(word[letter]))){
-                    search = dfs(graph, word, letter+1, neighbor, visited, search);
+                    String aux1 = String.valueOf(root.getPosition());
+                    String aux2 = String.valueOf(neighbor.getPosition());
+                    nodo = graphView.addNode(aux2);
+                    nodo.setAttribute("ui.label", String.valueOf(neighbor.getData()));
+                    graphView.addEdge(aux1+"-"+aux2, aux1, aux2);
+                    search = dfsLib(graph, graphView, word, letter+1, neighbor, visited, search);
                 }
             }
         }
@@ -59,37 +54,25 @@ public class WordSearchModel {
         } 
         return search;
     }
-
-    /**
-     * Looks for the first letter of the word in the list of vertices of the graph to use as a root in the Breadth-First-Algorithm
-     *
-     * @param graph the graph where we are going to search for the word
-     * @param word the word we are going to look for
-     * @return a boolean value that depends on whether the word is in the graph
-     */
-    public static boolean bfsSearch(GraphADS graph, char[] word) {
+    
+    public static boolean viewBfs(GraphADS graph, char[] word){
         boolean isWord = false;
+        Graph graphView = new SingleGraph("Grafo DFS");
         
         for(var vertice : graph.getVertices()){
             if(vertice.getData().equals(word[0])){
-                isWord = bfs(graph, vertice, word);
-                if (isWord){
-                    break;
-                }
+                Node nodo = graphView.addNode(String.valueOf(vertice.getPosition()));
+                nodo.setAttribute("ui.label", String.valueOf(vertice.getData()));
+                isWord = bfsLib(graph, graphView, vertice, word);
             }
         }
+        graphView.setAttribute("ui.stylesheet", "node { text-size: 70px; size: 5px;}");
+        System.setProperty("org.graphstream.ui", "swing");
+        graphView.display();
         return isWord;
     }
     
-    /**
-     * Print the traverse of a Breadth First Search algorithm in a graph
-     *
-     * @param graph the graph to be traversed
-     * @param root bfs initial vertex
-     * @param word the word we are going to look for
-     * @return a boolean value that depends on whether the word is in the graph
-     */
-    private static boolean bfs(GraphADS graph, Vertex root, char[] word) {
+    public static boolean bfsLib(GraphADS graph, Graph graphView, Vertex root, char[] word){
         
         int startVertex = root.getPosition();
         int currentNeighbor;
@@ -100,6 +83,7 @@ public class WordSearchModel {
         int counter2 = 0;
         boolean counter3 = false;
         boolean isWord = false;
+        Node nodo;
         
         queue.enqueue(root);
         visited[startVertex] = true;
@@ -120,6 +104,11 @@ public class WordSearchModel {
                     queue.enqueue(neighbor);
                     counter2++;
                     counter3=true;
+                    String aux1 = String.valueOf(currentVertex.getPosition());
+                    String aux2 = String.valueOf(neighbor.getPosition());
+                    nodo = graphView.addNode(aux2);
+                    nodo.setAttribute("ui.label", String.valueOf(neighbor.getData()));
+                    graphView.addEdge(aux1+"-"+aux2, aux1, aux2);
                 }
             }
             
@@ -130,7 +119,6 @@ public class WordSearchModel {
                 counter3=false;
                 if (caracter==word.length){
                     isWord = true;
-                    break;
                 }
             }
         }

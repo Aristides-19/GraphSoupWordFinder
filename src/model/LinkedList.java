@@ -13,8 +13,8 @@ import java.util.NoSuchElementException;
  */
 public class LinkedList<T> implements Iterable<T> {
 
-    private Node<T> first;
-    private Node<T> last;
+    private NodeList<T> first;
+    private NodeList<T> last;
     private int size;
 
     public LinkedList() {
@@ -29,7 +29,7 @@ public class LinkedList<T> implements Iterable<T> {
      * @param data data of the node that will be inserted
      */
     public void insert(T data) {
-        Node<T> newNode = new Node<>(data);
+        NodeList<T> newNode = new NodeList<>(data);
 
         if (isEmpty()) {
             first = newNode;
@@ -47,7 +47,7 @@ public class LinkedList<T> implements Iterable<T> {
      * @param data data of the node that will be inserted
      */
     public void insertAtFirst(T data) {
-        Node<T> newNode = new Node<>(data);
+        NodeList<T> newNode = new NodeList<>(data);
 
         if (isEmpty()) {
             first = newNode;
@@ -82,7 +82,7 @@ public class LinkedList<T> implements Iterable<T> {
             return nodeItSelf ? last : last.getData();
 
         } else {
-            Node<T> aux = first;
+            NodeList<T> aux = first;
 
             for (int i = 0; i < index; i++) {
 
@@ -123,11 +123,11 @@ public class LinkedList<T> implements Iterable<T> {
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     public void delete(int index) {
-        Node<T> toDelete = (Node<T>) get(index, true);
+        NodeList<T> toDelete = (NodeList<T>) get(index, true);
 
         // not first case
         if (index != 0) {
-            Node<T> aux = (Node<T>) get(index - 1, true);
+            NodeList<T> aux = (NodeList<T>) get(index - 1, true);
             aux.setNext(toDelete.getNext());
             last = index == size - 1 ? aux : last;
 
@@ -191,7 +191,7 @@ public class LinkedList<T> implements Iterable<T> {
 
     private class ListIterator implements Iterator<T> {
 
-        private Node<T> current = first;
+        private NodeList<T> current = first;
 
         @Override
         public boolean hasNext() {
