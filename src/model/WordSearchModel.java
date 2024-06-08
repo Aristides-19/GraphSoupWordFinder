@@ -13,7 +13,7 @@ public class WordSearchModel {
      * @param word the word we are going to look for
      * @return a boolean value that depends on whether the word is in the graph
      */
-    public static boolean dfsSearch(Graph graph, char[] word) {
+    public static boolean dfsSearch(GraphADS graph, char[] word) {
         boolean[] visited = new boolean[graph.getMaxVertices()];
         boolean isWord = false;
         
@@ -39,7 +39,7 @@ public class WordSearchModel {
      * @param search boolean indicating whether the word was founded
      * @return a boolean value that depends on whether the word is in the graph
      */
-    private static boolean dfs(Graph graph, char[] word, int letter, Vertex root, boolean[] visited, boolean search){
+    private static boolean dfs(GraphADS graph, char[] word, int letter, Vertex root, boolean[] visited, boolean search){
         System.out.print(root.getData() + " ");
         
         if (letter<word.length){
@@ -67,7 +67,7 @@ public class WordSearchModel {
      * @param word the word we are going to look for
      * @return a boolean value that depends on whether the word is in the graph
      */
-    public static boolean bfsSearch(Graph graph, char[] word) {
+    public static boolean bfsSearch(GraphADS graph, char[] word) {
         boolean isWord = false;
         
         for(var vertice : graph.getVertices()){
@@ -89,7 +89,7 @@ public class WordSearchModel {
      * @param word the word we are going to look for
      * @return a boolean value that depends on whether the word is in the graph
      */
-    private static boolean bfs(Graph graph, Vertex root, char[] word) {
+    private static boolean bfs(GraphADS graph, Vertex root, char[] word) {
         
         int startVertex = root.getPosition();
         int currentNeighbor;

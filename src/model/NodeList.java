@@ -5,21 +5,21 @@ package model;
  * @author Arístides Pérez & Jesús Duarte
  * @param <T> node can hold any object
  */
-public class Node<T> {
+public class NodeList<T> {
 
-    private Node next;
+    private NodeList next;
     private T data;
 
-    protected Node(T data) {
+    protected NodeList(T data) {
         this.next = null;
         this.data = data;
     }
 
-    public Node getNext() {
+    public NodeList getNext() {
         return next;
     }
 
-    public void setNext(Node next) {
+    public void setNext(NodeList next) {
         this.next = next;
     }
 
