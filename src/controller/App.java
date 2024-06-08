@@ -1,6 +1,6 @@
 package controller;
 
-import model.GraphADS;
+import model.Graph;
 import model.WordSearchModel;
 import view.*;
 import model.LinkedList;
@@ -11,7 +11,7 @@ import model.LinkedList;
  */
 public class App {
 
-    private static GraphADS<Character> soupGraph;
+    private static Graph<Character> soupGraph;
     private static final LinkedList<String> dictionary = new LinkedList<>();
 
     /**
@@ -114,7 +114,7 @@ public class App {
         return dictionary;
     }
 
-    public static GraphADS<Character> getGraph() {
+    public static Graph<Character> getGraph() {
         return soupGraph;
     }
 

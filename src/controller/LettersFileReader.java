@@ -8,7 +8,7 @@ import java.time.chrono.ThaiBuddhistEra;
 import java.util.Scanner;
 import model.Queue;
 import model.LinkedList;
-import model.GraphADS;
+import model.Graph;
 import model.Vertex;
 
 /**
@@ -82,7 +82,7 @@ public class LettersFileReader {
      * @param graph graph created before with word soup letters
      * @return true if the writing was succesful, otherwise false
      */
-    public static boolean write(LinkedList<String> dictionary, GraphADS graph) {
+    public static boolean write(LinkedList<String> dictionary, Graph graph) {
         String toWrite = "dic\n";
         for (String word : dictionary) {
             toWrite += word + "\n";
@@ -117,7 +117,7 @@ public class LettersFileReader {
         }
 
         for (int i = 0; i < word.length(); i++) {
-            char c = word.charAt(i);
+            char c = word.charAt(0);
 
             if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))) {
                 return false;
