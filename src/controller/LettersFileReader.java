@@ -117,7 +117,7 @@ public class LettersFileReader {
         }
 
         for (int i = 0; i < word.length(); i++) {
-            char c = word.charAt(0);
+            char c = word.charAt(i);
 
             if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))) {
                 return false;
