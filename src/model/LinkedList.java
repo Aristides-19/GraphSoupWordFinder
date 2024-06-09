@@ -94,6 +94,17 @@ public class LinkedList<T> implements Iterable<T> {
     }
 
     /**
+     * Change the data from a node by its index
+     *
+     * @param index index of node
+     * @param data new data
+     */
+    public void set(int index, T data) {
+        NodeList<T> toSet = (NodeList<T>) get(index, true);
+        toSet.setData(data);
+    }
+
+    /**
      * Verifies if the object itself is contained in the list
      *
      * @param element object to be compared

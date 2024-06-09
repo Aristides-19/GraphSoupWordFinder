@@ -4,6 +4,7 @@ import model.Graph;
 import model.WordSearchModel;
 import view.*;
 import model.LinkedList;
+import model.WordSearchGraphDisplay;
 
 /**
  * Main Controller of the Project
@@ -14,6 +15,7 @@ public class App {
 
     private static Graph<Character> soupGraph;
     private static final LinkedList<String> dictionary = new LinkedList<>();
+    private static double msTime;
 
     /**
      * @param args the command line arguments
@@ -52,39 +54,52 @@ public class App {
     }
 
     /**
-     * To search every dictionary word on the graph
+     * To search one word on the graph.
      *
-     * @param choice algorithm to traverse the graph. 0 is DFS and 1 is BFS.
-     * @return Array of strings containing a pair with word : found or not. The
-     * last element is the time delayed to find every word in the graph in
-     * miliseconds.
+     * @param choice algorithm to traverse the graph. 0 is DFS and 1 is BFS
+     * @param word the word to search on the graph
+     * @return boolean value whether the word is found or not
      */
-    public static String[] searchWords(int choice) {
+    public static boolean searchWord(int choice, String word) {
+        char[] wordChars = new char[word.length()];
+
+        for (int i = 0; i < word.length(); i++) {
+            wordChars[i] = word.charAt(i);
+        }
+
+        if (choice == 0) {
+            return WordSearchGraphDisplay.viewDfs(soupGraph, wordChars);
+        } else {
+            return WordSearchGraphDisplay.viewBfs(soupGraph, wordChars);
+        }
+    }
+
+    /**
+     * To search every dictionary word on the graph. The time delayed is set to
+     * the msTime attribute from App.
+       *
+     * @param choice algorithm to traverse the graph. 0 is DFS and 1 is BFS.
+     * @return boolean array where each index shows a boolean value whether
+     * index word was found in the graph
+     */
+    public static boolean[] searchWords(int choice) {
         char[][] words = wordsToChars();
         boolean[] wordsFound = new boolean[dictionary.getSize()];
-        String[] returnArray = new String[dictionary.getSize() + 1];
 
         long startTime = System.nanoTime();
         if (choice == 0) {
             for (int i = 0; i < words.length; i++) {
                 wordsFound[i] = WordSearchModel.dfsSearch(soupGraph, words[i]);
             }
-        } else if (choice == 1) {
+        } else {
             for (int i = 0; i < words.length; i++) {
                 wordsFound[i] = WordSearchModel.bfsSearch(soupGraph, words[i]);
             }
         }
         long endTime = System.nanoTime();
-        double time = (double) (endTime - startTime) / 1000000;
+        msTime = (double) (endTime - startTime) / 1000000;
 
-        returnArray[dictionary.getSize()] = "Tiempo en encontrar las palabras: " + time + "ms";
-        int i = 0;
-        for (String word : dictionary) {
-            returnArray[i] = wordsFound[i] ? word + ": Encontrada" : word + ": No Encontrada";
-            i++;
-        }
-
-        return returnArray;
+        return wordsFound;
     }
 
     /**
@@ -117,6 +132,15 @@ public class App {
 
     public static Graph<Character> getGraph() {
         return soupGraph;
+    }
+
+    /**
+     * It can not be called if searchWords never has been called
+     *
+     * @return time delayed to find every word on dictionary from last search
+     */
+    public static double getMsTime() {
+        return msTime;
     }
 
     /**

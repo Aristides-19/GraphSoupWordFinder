@@ -218,7 +218,7 @@ public class FileSelector extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeButtonMouseClicked
 
     private void exitButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButton1MouseClicked
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_exitButton1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

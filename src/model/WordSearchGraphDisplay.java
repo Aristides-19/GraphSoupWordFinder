@@ -2,6 +2,7 @@ package model;
 
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
+import org.graphstream.ui.view.Viewer;
 
 /**
  * A class to use BFS and DFS algorithm's and display their traverse graph with
@@ -27,6 +28,7 @@ public class WordSearchGraphDisplay {
         boolean[] visited = new boolean[graph.getMaxVertices()];
         SingleGraph graphView = new SingleGraph("Grafo DFS");
         boolean isWord = false;
+        boolean partialResult = false;
 
         for (var vertex : graph.getVertices()) {
             if (vertex.getData().equals(word[0])) {
@@ -38,7 +40,15 @@ public class WordSearchGraphDisplay {
                 } catch (IdAlreadyInUseException e) {
 
                 }
-                isWord = algorithm > 0 ? dfsLib(graphView, word, 1, vertex, visited, isWord) : bfsLib(graphView, vertex, word, visited);
+                if (algorithm > 0) {
+                    partialResult = dfsLib(graphView, word, 1, vertex, visited, isWord);
+                } else {
+                    partialResult = bfsLib(graphView, vertex, word, visited);
+                }
+
+                if (isWord == false) {
+                    isWord = partialResult;
+                }
             }
         }
 
@@ -49,7 +59,9 @@ public class WordSearchGraphDisplay {
         }
 
         System.setProperty("org.graphstream.ui", "swing");
-        graphView.display();
+        Viewer actualGraph = graphView.display();
+        actualGraph.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
+
         return isWord;
     }
 
@@ -111,7 +123,7 @@ public class WordSearchGraphDisplay {
         queue.enqueue(root);
         visited[root.getPosition()] = true;
 
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty() && character < word.length) {
 
             Vertex currentVertex = queue.dequeue();
             currentLevelCount--;
@@ -135,7 +147,10 @@ public class WordSearchGraphDisplay {
                 currentLevelCount = nextLevelCount;
                 nextLevelCount = 0;
                 foundCharacter = false;
-                isWord = character == word.length;
+
+                if (character == word.length && isWord == false) {
+                    isWord = true;
+                }
             }
         }
 

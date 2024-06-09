@@ -4,9 +4,14 @@ import java.awt.Frame;
 import javax.swing.JButton;
 import model.Vertex;
 import controller.App;
-import java.util.Arrays;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import model.LinkedList;
 
 /**
  * Main Menu where the user can interact with the whole app and graph
@@ -16,6 +21,7 @@ import javax.swing.JOptionPane;
 public class Menu extends javax.swing.JFrame {
 
     private final DefaultListModel<String> dictionaryModel = new DefaultListModel<>();
+    private LinkedList<Integer> dictionaryCellsColor = new LinkedList<>();
 
     /**
      * Creates new form Menu to set the board with vertices data
@@ -26,10 +32,30 @@ public class Menu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
-        // dictionary View Initialization 
+        // dictionary View Initialization
+        int index = 0;
         for (String word : App.getDictionary()) {
             dictionaryModel.addElement(word);
+            dictionaryCellsColor.insert(index);
         }
+
+        dictionaryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        dictionaryList.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                switch (dictionaryCellsColor.get(index)) {
+                    case 1 ->
+                        c.setBackground(Color.GREEN); // word found
+                    case 2 ->
+                        c.setBackground(Color.RED); // word not found
+                    default ->
+                        c.setBackground(Color.WHITE); // word not searched yet
+                }
+                return c;
+            }
+        });
         dictionaryList.setSelectedIndex(0);
 
         // Board Initialization
@@ -331,7 +357,7 @@ public class Menu extends javax.swing.JFrame {
         dictionaryList.setModel(dictionaryModel);
         scrollDictionary.setViewportView(dictionaryList);
 
-        Main.add(scrollDictionary, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 60, 230));
+        Main.add(scrollDictionary, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 80, 230));
 
         wordSep.setBackground(new java.awt.Color(255, 255, 255));
         wordSep.setForeground(new java.awt.Color(0, 0, 0));
@@ -423,13 +449,27 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeButtonMouseClicked
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
-        this.dispose();
+        System.exit(0);
 
     }//GEN-LAST:event_exitButtonMouseClicked
 
-
     private void searchSelectedWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchSelectedWordActionPerformed
+        String selectedWord = dictionaryList.getSelectedValue();
+        int selectedWordI = dictionaryList.getSelectedIndex();
+        
+        String[] options = {"DFS", "BFS"};
+        int result = JOptionPane.showOptionDialog(this,
+                "¿Cuál algoritmo de recorrido quieres usar?",
+                "Presiona una opción",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null,
+                options, options[1]);
 
+        if (result == 1 || result == 0) {
+            boolean isWord = App.searchWord(result, selectedWord);
+            dictionaryCellsColor.set(selectedWordI, isWord ? 1 : 2);
+            dictionaryList.repaint();
+        }
     }//GEN-LAST:event_searchSelectedWordActionPerformed
 
     private void wordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFieldActionPerformed
@@ -452,6 +492,7 @@ public class Menu extends javax.swing.JFrame {
         boolean success = App.addDictionaryWord(wordField.getText().toUpperCase());
 
         if (success) {
+            dictionaryCellsColor.insert(0);
             dictionaryModel.addElement(wordField.getText().toUpperCase());
             JOptionPane.showMessageDialog(this, "La palabra " + wordField.getText().toUpperCase() + " ha sido añadida con éxito");
         } else {
@@ -459,7 +500,7 @@ public class Menu extends javax.swing.JFrame {
                     + "debe contener 3 letras o más sin caracter especial o ya estar en el diccionario");
         }
     }//GEN-LAST:event_wordAddButtonActionPerformed
-    
+
     /**
      * shows an optionPane to let the user choose to update the loaded file or
      * not, it calls controller App
@@ -478,13 +519,34 @@ public class Menu extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_updateDictionaryButtonActionPerformed
-
+    
+    /**
+     * Shows an optionPane to let the user choose a traverse algorithm, calls
+     * App Controller, shows the delayed time and updates the JList
+     * 
+     * @param evt 
+     */
     private void searchDictionaryWordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDictionaryWordsActionPerformed
-        String[] dictio1 = App.searchWords(0);
-        String[] dictio2 = App.searchWords(1);
+        String[] options = {"DFS", "BFS"};
+        int result = JOptionPane.showOptionDialog(this,
+                "¿Cuál algoritmo de recorrido quieres usar?",
+                "Presiona una opción",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null,
+                options, options[1]);
+        
+        boolean[] wordsFound = result == 1 || result == 0 ? App.searchWords(result) : null;
 
-        System.out.println(Arrays.toString(dictio1));
-        System.out.println(Arrays.toString(dictio2));
+        if (wordsFound != null) {
+            double msTime = App.getMsTime();
+
+            for (int i = 0; i < wordsFound.length; i++) {
+                dictionaryCellsColor.set(i, wordsFound[i] ? 1 : 2);
+            }
+
+            dictionaryList.repaint();
+            JOptionPane.showMessageDialog(this, "El tiempo en encontrar todas las palabras fue de " + msTime + " ms");
+        }
     }//GEN-LAST:event_searchDictionaryWordsActionPerformed
 
 
