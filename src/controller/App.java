@@ -1,17 +1,18 @@
 package controller;
 
-import model.GraphADS;
+import model.Graph;
 import model.WordSearchModel;
 import view.*;
 import model.LinkedList;
 
 /**
+ * Main Controller of the Project
  *
  * @author Jesús Duarte & Arístides Pérez
  */
 public class App {
 
-    private static GraphADS<Character> soupGraph;
+    private static Graph<Character> soupGraph;
     private static final LinkedList<String> dictionary = new LinkedList<>();
 
     /**
@@ -28,9 +29,9 @@ public class App {
      * @param path path of the file txt
      * @return true if the process was succesful, false otherwise
      */
-    public static boolean sendFileData(String path) {
+    public static boolean sendFilePath(String path) {
         try {
-            String[][] lettersFile = LettersFileReader.read(path);
+            String[][] lettersFile = FileController.read(path);
             Character[] vertices = new Character[lettersFile[1].length];
 
             for (int i = 0; i < vertices.length; i++) {
@@ -93,7 +94,7 @@ public class App {
      * @return true if the addition proccess was succesful, false otherwise
      */
     public static boolean addDictionaryWord(String word) {
-        if (LettersFileReader.isValidWord(word) && !dictionary.contains(word)) {
+        if (FileController.isValidWord(word) && !dictionary.contains(word)) {
             dictionary.insert(word);
             return true;
         }
@@ -106,7 +107,7 @@ public class App {
      * @return true if the process was succesful, false otherwise
      */
     public static boolean updateDictionaryFile() {
-        boolean result = LettersFileReader.write(dictionary, soupGraph);
+        boolean result = FileController.write(dictionary, soupGraph);
         return result;
     }
 
@@ -114,7 +115,7 @@ public class App {
         return dictionary;
     }
 
-    public static GraphADS<Character> getGraph() {
+    public static Graph<Character> getGraph() {
         return soupGraph;
     }
 

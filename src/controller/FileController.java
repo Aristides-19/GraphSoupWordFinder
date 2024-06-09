@@ -4,11 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.chrono.ThaiBuddhistEra;
 import java.util.Scanner;
 import model.Queue;
 import model.LinkedList;
-import model.GraphADS;
+import model.Graph;
 import model.Vertex;
 
 /**
@@ -17,7 +16,7 @@ import model.Vertex;
  *
  * @author Arístides Pérez
  */
-public class LettersFileReader {
+public class FileController {
 
     static private String filePath;
 
@@ -82,7 +81,7 @@ public class LettersFileReader {
      * @param graph graph created before with word soup letters
      * @return true if the writing was succesful, otherwise false
      */
-    public static boolean write(LinkedList<String> dictionary, GraphADS graph) {
+    public static boolean write(LinkedList<String> dictionary, Graph graph) {
         String toWrite = "dic\n";
         for (String word : dictionary) {
             toWrite += word + "\n";

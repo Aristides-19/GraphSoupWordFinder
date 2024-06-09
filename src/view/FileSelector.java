@@ -172,7 +172,7 @@ public class FileSelector extends javax.swing.JFrame {
      */
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
 
-        boolean success = App.sendFileData(path.getText());
+        boolean success = App.sendFilePath(path.getText());
 
         if (success) {
             this.setVisible(false);

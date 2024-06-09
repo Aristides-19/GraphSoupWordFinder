@@ -1,141 +1,142 @@
 package model;
 
 /**
+ * WordSearchModel stores the BFS and DFS algorithm's
  *
  * @author Jesús Duarte & Arístides Pérez
  */
 public class WordSearchModel {
 
     /**
-     * Looks for the first letter of the word in the list of vertices of the graph to use as a root in the Depth-First-Algorithm
+     * Looks for the first letter of the word in the list of vertices of the
+     * graph to use as a root in the chosen algorithm
      *
+     * @param algorithm if > 0 it uses DFS, otherwise BFS
      * @param graph the graph where we are going to search for the word
      * @param word the word we are going to look for
      * @return a boolean value that depends on whether the word is in the graph
      */
-    public static boolean dfsSearch(GraphADS graph, char[] word) {
+    private static boolean callFromRoot(int algorithm, Graph graph, char[] word) {
         boolean[] visited = new boolean[graph.getMaxVertices()];
         boolean isWord = false;
-        
-        for(var vertice : graph.getVertices()){
-            if(vertice.getData().equals(word[0])){
-                isWord = dfs(graph, word, 1, vertice, visited, isWord);
-                if (isWord){
+
+        for (var vertice : graph.getVertices()) {
+            if (vertice.getData().equals(word[0])) {
+                isWord = algorithm > 0 ? dfs(word, 1, vertice, visited, isWord) : bfs(vertice, word, visited);
+                if (isWord) {
                     break;
                 }
             }
         }
         return isWord;
     }
-    
+
     /**
-     * Search from the second letter onwards
+     * Looks for the first letter of the word in the list of vertices of the
+     * graph to use as a root in the Depth-First-Algorithm
      *
      * @param graph the graph where we are going to search for the word
      * @param word the word we are going to look for
-     * @param letter index of the letter of the word that we are going to compare
-     * @param root vertex whose adjacencies we will use
-     * @param visited arrays indicating which vertices were visited
-     * @param search boolean indicating whether the word was founded
      * @return a boolean value that depends on whether the word is in the graph
      */
-    private static boolean dfs(GraphADS graph, char[] word, int letter, Vertex root, boolean[] visited, boolean search){
-        System.out.print(root.getData() + " ");
-        
-        if (letter<word.length){
-            int startVertex = root.position;
+    public static boolean dfsSearch(Graph graph, char[] word) {
+        return callFromRoot(1, graph, word);
+    }
+
+    /**
+     * Search from the second letter onwards
+     *
+     * @param word the word we are going to look for
+     * @param letter index of the letter of the word that we are going to
+     * compare
+     * @param root vertex whose adjacencies we will use
+     * @param visited arrays indicating which vertices were visited
+     * @param search boolean indicating whether the word was found
+     * @return a boolean value that depends on whether the word is in the graph
+     */
+    private static boolean dfs(char[] word, int letter, Vertex root, boolean[] visited, boolean search) {
+
+        if (letter < word.length) {
+            int startVertex = root.getPosition();
             visited[startVertex] = true;
             LinkedList<Vertex> neighbors = root.getEdges();
 
-            for (var neighbor : neighbors){
+            for (var neighbor : neighbors) {
                 int position = neighbor.getPosition();
-                if((!visited[position]) & (neighbor.getData().equals(word[letter]))){
-                    search = dfs(graph, word, letter+1, neighbor, visited, search);
+
+                if ((!visited[position]) && (neighbor.getData().equals(word[letter]))) {
+                    search = dfs(word, letter + 1, neighbor, visited, search);
+
+                    if (search) {
+                        break;
+                    }
                 }
             }
+        } else {
+            return true;
         }
-        else{
-            search = true;
-        } 
         return search;
     }
 
     /**
-     * Looks for the first letter of the word in the list of vertices of the graph to use as a root in the Breadth-First-Algorithm
+     * Looks for the first letter of the word in the list of vertices of the
+     * graph to use as a root in the Breadth-First-Algorithm
      *
      * @param graph the graph where we are going to search for the word
      * @param word the word we are going to look for
      * @return a boolean value that depends on whether the word is in the graph
      */
-    public static boolean bfsSearch(GraphADS graph, char[] word) {
-        boolean isWord = false;
-        
-        for(var vertice : graph.getVertices()){
-            if(vertice.getData().equals(word[0])){
-                isWord = bfs(graph, vertice, word);
-                if (isWord){
-                    break;
-                }
-            }
-        }
-        return isWord;
+    public static boolean bfsSearch(Graph graph, char[] word) {
+        return callFromRoot(1, graph, word);
     }
-    
+
     /**
-     * Print the traverse of a Breadth First Search algorithm in a graph
+     * Search from the second letter onwards
      *
-     * @param graph the graph to be traversed
      * @param root bfs initial vertex
      * @param word the word we are going to look for
      * @return a boolean value that depends on whether the word is in the graph
      */
-    private static boolean bfs(GraphADS graph, Vertex root, char[] word) {
-        
-        int startVertex = root.getPosition();
+    private static boolean bfs(Vertex root, char[] word, boolean[] visited) {
+
         int currentNeighbor;
         Queue<Vertex> queue = new Queue<>();
-        boolean[] visited = new boolean[graph.getMaxVertices()];
-        int caracter = 1;
-        int counter1 = 1;
-        int counter2 = 0;
-        boolean counter3 = false;
-        boolean isWord = false;
-        
+        int character = 1; // character to look for
+        int currentLevelCount = 1; // counts how many vertices need to traverse on the actual level
+        int nextLevelCount = 0; // counts how many vertices need to traverse on next level
+        boolean foundCharacter = false;
+
         queue.enqueue(root);
-        visited[startVertex] = true;
-        
-        while (!queue.isEmpty() & caracter<word.length) {
-            
-            counter1--;
-            
+        visited[root.getPosition()] = true;
+
+        while (!queue.isEmpty()) {
+
             Vertex currentVertex = queue.dequeue();
-            System.out.print(currentVertex.getData() + " ");
+            currentLevelCount--;
             LinkedList<Vertex> neighbors = currentVertex.getEdges();
-            
+
             for (var neighbor : neighbors) {
                 currentNeighbor = neighbor.getPosition();
 
-                if ((!visited[currentNeighbor]) & (neighbor.getData().equals(word[caracter]))) {
+                if ((!visited[currentNeighbor]) && (neighbor.getData().equals(word[character]))) {
                     visited[currentNeighbor] = true;
                     queue.enqueue(neighbor);
-                    counter2++;
-                    counter3=true;
+                    nextLevelCount++;
+                    foundCharacter = true;
                 }
             }
-            
-            if((counter1 == 0) & counter3){
-                caracter++;
-                counter1=counter2;
-                counter2=0;
-                counter3=false;
-                if (caracter==word.length){
-                    isWord = true;
-                    break;
+
+            if ((currentLevelCount == 0) && foundCharacter) {
+                character++;
+                currentLevelCount = nextLevelCount;
+                nextLevelCount = 0;
+                foundCharacter = false;
+                if (character == word.length) {
+                    return true;
                 }
             }
         }
-        
-        
-        return isWord;
+
+        return false;
     }
 }

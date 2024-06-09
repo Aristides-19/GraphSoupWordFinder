@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
  * A Singly Linked List with last and first node. It is iterable through a
  * For-Each
  *
- *
  * @author Arístides Pérez & Jesús Duarte
  * @param <T> nodes can hold any object
  */

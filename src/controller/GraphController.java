@@ -1,6 +1,6 @@
 package controller;
 
-import model.GraphADS;
+import model.Graph;
 
 /**
  *
@@ -15,8 +15,8 @@ public class GraphController {
      * the word soup
      * @return the graph object with edges
      */
-    static GraphADS<Character> createGraph(Character[] letters) {
-        GraphADS<Character> graph = new GraphADS(16);
+    static Graph<Character> createGraph(Character[] letters) {
+        Graph<Character> graph = new Graph(16);
         Character info;
 
         for (int i = 0; i < graph.getMaxVertices(); i++) {
@@ -37,7 +37,7 @@ public class GraphController {
      *
      * @param graph the graph created with createGraph method
      */
-    private static void createEdges(GraphADS graph) {
+    private static void createEdges(Graph graph) {
 
         for (int i = 0; i < graph.getMaxVertices() - 1; i++) {
 

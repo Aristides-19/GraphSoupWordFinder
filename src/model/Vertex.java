@@ -9,7 +9,7 @@ public class Vertex<T> {
 
     private T data;
     final private LinkedList<Vertex<T>> edges;
-    final int position;
+    final private int position;
 
     protected Vertex(T data, int position) {
         this.data = data;

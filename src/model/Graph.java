@@ -9,13 +9,13 @@ import java.util.NoSuchElementException;
  * @author Arístides Pérez
  * @param <T> vertices can hold any object
  */
-public class GraphADS<T> {
+public class Graph<T> {
 
     private int size, currentVertices;
     final private int maxVertices;
     final private Vertex<T>[] vertices;
 
-    public GraphADS(int maxVertices) {
+    public Graph(int maxVertices) {
         this.maxVertices = maxVertices;
         this.size = 0;
         this.currentVertices = 0;
