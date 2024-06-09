@@ -24,7 +24,8 @@ public class Menu extends javax.swing.JFrame {
     private LinkedList<Integer> dictionaryCellsColor = new LinkedList<>();
 
     /**
-     * Creates new form Menu to set the board with vertices data
+     * Creates new form Menu to set the board with vertices data and JList with
+     * App Dictionary Info
      *
      */
     public Menu() {
@@ -83,6 +84,7 @@ public class Menu extends javax.swing.JFrame {
         titleBar = new javax.swing.JPanel();
         exitButton = new javax.swing.JLabel();
         minimizeButton = new javax.swing.JLabel();
+        helpButton = new javax.swing.JLabel();
         board = new javax.swing.JPanel();
         aBoard = new javax.swing.JButton();
         bBoard = new javax.swing.JButton();
@@ -140,12 +142,24 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        helpButton.setFont(new java.awt.Font("sansserif", 0, 22)); // NOI18N
+        helpButton.setForeground(new java.awt.Color(51, 51, 51));
+        helpButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        helpButton.setText("?");
+        helpButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        helpButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                helpButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout titleBarLayout = new javax.swing.GroupLayout(titleBar);
         titleBar.setLayout(titleBarLayout);
         titleBarLayout.setHorizontalGroup(
             titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titleBarLayout.createSequentialGroup()
-                .addContainerGap(596, Short.MAX_VALUE)
+                .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 556, Short.MAX_VALUE)
                 .addComponent(minimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,7 +169,9 @@ public class Menu extends javax.swing.JFrame {
             titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titleBarLayout.createSequentialGroup()
                 .addGroup(titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(minimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(minimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -553,6 +569,11 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchDictionaryWordsActionPerformed
 
+    private void helpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpButtonMouseClicked
+        this.setVisible(false);
+        Help helpGUI = new Help(this);
+    }//GEN-LAST:event_helpButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Main;
@@ -567,6 +588,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton fBoard;
     private javax.swing.JButton gBoard;
     private javax.swing.JButton hBoard;
+    private javax.swing.JLabel helpButton;
     private javax.swing.JButton iBoard;
     private javax.swing.JButton jBoard;
     private javax.swing.JButton kBoard;
