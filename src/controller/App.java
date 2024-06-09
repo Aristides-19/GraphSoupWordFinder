@@ -26,7 +26,8 @@ public class App {
     }
 
     /**
-     * Bridge to send data of the file to read from view
+     * Bridge to send path of the file to read from view, generates the graph
+     * and dictionary
      *
      * @param path path of the file txt
      * @return true if the process was succesful, false otherwise
@@ -60,7 +61,7 @@ public class App {
      * @param word the word to search on the graph
      * @return 0 if the word wasn't found but there is at least the first letter
      * on the graph, otherwise -1 and the viewer won't be displayed. 1 if the
-     * word     * was found.
+     * word was found.
      */
     public static int searchWord(int choice, String word) {
         char[] wordChars = new char[word.length()];
@@ -134,16 +135,26 @@ public class App {
         return result;
     }
 
+    /**
+     * Dictionary of words to found on the graph
+     *
+     * @return LinkedList containing words
+     */
     public static LinkedList<String> getDictionary() {
         return dictionary;
     }
 
+    /**
+     * Graph representing word soup
+     *
+     * @return graph of characters
+     */
     public static Graph<Character> getGraph() {
         return soupGraph;
     }
 
     /**
-     * It can not be called if searchWords never has been called
+     * It can not be called if searchWords never has never been called
      *
      * @return time delayed to find every word on dictionary from last search
      */

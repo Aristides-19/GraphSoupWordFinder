@@ -72,6 +72,13 @@ public class LinkedList<T> implements Iterable<T> {
         return (T) get(index, false);
     }
 
+    /**
+     * Get a Node.
+     *
+     * @param index index from the node to request, starts at zero
+     * @param nodeItSelf if wants to return the node object itself
+     * @return node data or node object
+     */
     private Object get(int index, boolean nodeItSelf) {
 
         if (index < 0 || index >= size || isEmpty()) {
@@ -151,8 +158,9 @@ public class LinkedList<T> implements Iterable<T> {
     }
 
     /**
+     * A string representation of the list
      *
-     * @return A string representation of the list
+     * @return String List
      */
     @Override
     public String toString() {
@@ -171,26 +179,43 @@ public class LinkedList<T> implements Iterable<T> {
     }
 
     /**
+     * Check if the list si empty
      *
-     * @return true if the list is empty (size equals zero)
+     * @return boolean value representing description
      */
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /**
+     * Data of first node
+     *
+     * @return Data of first node
+     */
     public T getFirst() {
         return first.getData();
     }
 
+    /**
+     * Data of last node
+     *
+     * @return Data of last node
+     */
     public T getLast() {
         return last.getData();
     }
 
+    /**
+     * Current size of the list
+     *
+     * @return integer size of the list
+     */
     public int getSize() {
         return size;
     }
 
     /**
+     * Makes LinkedList iterable
      *
      * @return iterable linked list
      */

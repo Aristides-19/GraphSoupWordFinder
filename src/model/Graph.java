@@ -114,32 +114,6 @@ public class Graph<T> {
     }
 
     /**
-     * Get a Vertex Object by its index
-     *
-     * @param index index of the vertex
-     * @return the vertex
-     */
-    public Vertex<T> getVertex(int index) {
-        verifyIndex(index);
-
-        if (vertices[index] != null) {
-            return vertices[index];
-        } else {
-            throw new NoSuchElementException("This vertex does not exist");
-        }
-    }
-
-    /**
-     * Get a Shallow Copy of the neighbors vertices contained by a Linked List
-     *
-     * @param index index of the vertex to get neighbors
-     * @return a Linked List containing vertex objects
-     */
-    public LinkedList<Vertex<T>> getNeighbors(int index) {
-        return getVertex(index).getEdges();
-    }
-
-    /**
      * Get the degree of a vertex (number of neighbors)
      *
      * @param index index of the vertex
@@ -156,9 +130,9 @@ public class Graph<T> {
     }
 
     /**
+     * A string representation of the graph with vertices and its neighbors
      *
-     * @return A string representation of the graph with vertices and its
-     * neighbors
+     * @return String graph
      */
     @Override
     public String toString() {
@@ -179,6 +153,7 @@ public class Graph<T> {
     }
 
     /**
+     * Verifies if the graph has 0 vertices
      *
      * @return true if the graph is empty (currentVertices equals zero)
      */
@@ -187,32 +162,36 @@ public class Graph<T> {
     }
 
     /**
+     * Number of edges currently created in the graph
      *
-     * @return number of edges of the graph
+     * @return integer representing description
      */
     public int getSize() {
         return size;
     }
 
     /**
+     * Maximum capacity of the graph from the constructor
      *
-     * @return maximum capacity of the graph
+     * @return integer representing description
      */
     public int getMaxVertices() {
         return maxVertices;
     }
 
     /**
+     * Number of vertices created currently
      *
-     * @return number of vertices created currently
+     * @return integer representing description
      */
     public int getCurrentVertices() {
         return currentVertices;
     }
 
     /**
+     * The array of vertices
      *
-     * @return list of vertices
+     * @return array of vertices T
      */
     public Vertex<T>[] getVertices() {
         return vertices;

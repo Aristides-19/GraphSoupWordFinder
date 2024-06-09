@@ -24,8 +24,8 @@ public class FileController {
      * Read the txt file and convert it to a string
      *
      * @param path path of the file txt
-     * @return Array2D of Strings... Array[0] is word dictionary and Array[1] is
-     * word soup
+     * @return Array2D of Strings... Array[0] is words dictionary and Array[1]
+     * is     * word soup
      */
     public static String[][] read(String path) {
         filePath = path;

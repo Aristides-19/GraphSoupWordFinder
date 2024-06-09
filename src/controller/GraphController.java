@@ -3,6 +3,7 @@ package controller;
 import model.Graph;
 
 /**
+ * It controls the graph generation of a 4x4 word soup
  *
  * @author Jesús Duarte
  */
@@ -33,7 +34,6 @@ public class GraphController {
     /**
      * It creates edges for each vertex, working in a 16 vertices graph
      * representing a word soup
-     *
      *
      * @param graph the graph created with createGraph method
      */

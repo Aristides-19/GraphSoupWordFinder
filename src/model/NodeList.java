@@ -1,6 +1,7 @@
 package model;
 
 /**
+ * Node of the LinkedList
  *
  * @author Arístides Pérez & Jesús Duarte
  * @param <T> node can hold any object

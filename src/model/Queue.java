@@ -51,15 +51,30 @@ public class Queue<T> {
         throw new NoSuchElementException("The queue is empty; cannot dequeue");
     }
 
+    /**
+     * Checks whether the queue is empty or not
+     *
+     * @return boolean value
+     */
     public boolean isEmpty() {
         return queue.isEmpty();
     }
 
+    /**
+     * String representation of queue
+     *
+     * @return StringList
+     */
     @Override
     public String toString() {
         return queue.toString();
     }
 
+    /**
+     * Current enqueued nodes
+     *
+     * @return integer value
+     */
     public int getSize() {
         return queue.getSize();
     }

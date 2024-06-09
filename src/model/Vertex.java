@@ -1,6 +1,7 @@
 package model;
 
 /**
+ * A vertex of the graph
  *
  * @author Arístides Pérez
  * @param <T> vertex can hold any object
@@ -18,8 +19,9 @@ public class Vertex<T> {
     }
 
     /**
+     * A string representation of the vertex and its adjacency vertices
      *
-     * @return A string representation of the vertex and its adjacency vertices
+     * @return String vertex
      */
     @Override
     public String toString() {
