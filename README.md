@@ -7,9 +7,12 @@ Por último, el proyecto fue diseñado en base al patrón de diseño Model-View-
 
 Los puntos importantes para comprender el proyecto son los siguientes:
 * El archivo Main para ejecutar el proyecto está contenido en `src/controller/App.java`.
-* La arquitectura detallada está en el diagrama de clases UML `classDiagram.pdf`.
-* El archivo de texto `dictStructure.txt` es un ejemplo de cómo debe estar estructura el archivo cargado para generar la sopa de letras y el diccionario.
+* La arquitectura detallada está en el diagrama de clases UML `UML Class Structure.pdf`.
+* El archivo de texto `dictStructure.txt` es un ejemplo de cómo debe estar estructurado el archivo cargado para generar la sopa de letras y el diccionario.
 * El javadoc que documenta las funciones públicas está contenido en `dist/javadoc/index.html`
+
+Cabe recalcar que las estructuras de datos no fueron creadas por librería, solamente se utilizó GraphStream para lograr visualizar el grafo, más no
+para implementarlo como un tipo de dato.
 
 ## Autores
 Avatar|Colaborador
