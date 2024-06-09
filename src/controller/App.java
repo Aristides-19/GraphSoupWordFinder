@@ -58,19 +58,27 @@ public class App {
      *
      * @param choice algorithm to traverse the graph. 0 is DFS and 1 is BFS
      * @param word the word to search on the graph
-     * @return boolean value whether the word is found or not
+     * @return 0 if the word wasn't found but there is at least the first letter
+     * on the graph, otherwise -1 and the viewer won't be displayed. 1 if the
+     * word     * was found.
      */
-    public static boolean searchWord(int choice, String word) {
+    public static int searchWord(int choice, String word) {
         char[] wordChars = new char[word.length()];
-
+        int returnV;
         for (int i = 0; i < word.length(); i++) {
             wordChars[i] = word.charAt(i);
         }
 
         if (choice == 0) {
-            return WordSearchGraphDisplay.viewDfs(soupGraph, wordChars);
+            returnV = WordSearchGraphDisplay.viewDfs(soupGraph, wordChars) ? 1 : 0;
         } else {
-            return WordSearchGraphDisplay.viewBfs(soupGraph, wordChars);
+            returnV = WordSearchGraphDisplay.viewBfs(soupGraph, wordChars) ? 1 : 0;
+        }
+
+        if (WordSearchGraphDisplay.getNodeCount() == 0) {
+            return -1;
+        } else {
+            return returnV;
         }
     }
 

@@ -450,7 +450,6 @@ public class Menu extends javax.swing.JFrame {
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
         System.exit(0);
-
     }//GEN-LAST:event_exitButtonMouseClicked
 
     private void searchSelectedWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchSelectedWordActionPerformed
@@ -466,9 +465,14 @@ public class Menu extends javax.swing.JFrame {
                 options, options[1]);
 
         if (result == 1 || result == 0) {
-            boolean isWord = App.searchWord(result, selectedWord);
-            dictionaryCellsColor.set(selectedWordI, isWord ? 1 : 2);
+            int isWord = App.searchWord(result, selectedWord);
+            dictionaryCellsColor.set(selectedWordI, isWord == 1 ? 1 : 2);
             dictionaryList.repaint();
+            
+            if (isWord == -1) {
+                JOptionPane.showMessageDialog(this, "La palabra " + selectedWord
+                        + " no puede ser encontrada debido a que el tablero no contiene su primera letra");
+            }
         }
     }//GEN-LAST:event_searchSelectedWordActionPerformed
 
@@ -497,7 +501,7 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "La palabra " + wordField.getText().toUpperCase() + " ha sido añadida con éxito");
         } else {
             JOptionPane.showMessageDialog(this, "La palabra " + wordField.getText().toUpperCase() + " no es válida, "
-                    + "debe contener 3 letras o más sin caracter especial o ya estar en el diccionario");
+                    + "debe contener 3 letras o más sin caracter especial o no estar en el diccionario");
         }
     }//GEN-LAST:event_wordAddButtonActionPerformed
 

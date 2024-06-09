@@ -12,6 +12,11 @@ import org.graphstream.ui.view.Viewer;
  * @author Jesús Duarte & Arístides Pérez
  */
 public class WordSearchGraphDisplay {
+    private static int nodeCount;
+
+    public static int getNodeCount() {
+        return nodeCount;
+    }
 
     /**
      * Looks for the first letter of the word in the list of vertices of the
@@ -59,8 +64,11 @@ public class WordSearchGraphDisplay {
         }
 
         System.setProperty("org.graphstream.ui", "swing");
-        Viewer actualGraph = graphView.display();
-        actualGraph.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
+        nodeCount = graphView.getNodeCount();
+        if (nodeCount > 0) {
+            Viewer actualGraph = graphView.display();
+            actualGraph.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
+        }
 
         return isWord;
     }
